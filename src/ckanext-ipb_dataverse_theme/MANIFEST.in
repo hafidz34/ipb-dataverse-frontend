@@ -1,0 +1,6 @@
+include README.rst
+include LICENSE
+include requirements.txt
+recursive-include ckanext/ipb_dataverse_theme *.html *.json *.js *.less *.css *.mo *.yml
+recursive-include ckanext/ipb_dataverse_theme/migration *.ini *.py *.mako
+recursive-include ckanext/ipb_dataverse_theme/public *.*

@@ -1,0 +1,255 @@
+{# Halaman beranda IPB Dataverse #}
+{% extends "page.html" %}
+
+{% block page_title %}IPB Dataverse{% endblock %}
+
+{% block content %}
+
+  {# Section: Hero pencarian utama #}
+  <section class="ipb-hero">
+    <div class="container ipb-hero-inner">
+      <div class="ipb-hero-left">
+        <p class="ipb-hero-eyebrow">Selamat datang !</p>
+
+        <h1 class="ipb-hero-title">
+          IPB UNIVERSITY<br>
+          OPEN DATA PORTAL
+        </h1>
+
+        <p class="ipb-hero-desc">
+          Temukan dataset dari IPB University dan akses API data yang kamu butuhkan di sini.
+        </p>
+
+        <div class="ipb-hero-search">
+          <h2 class="ipb-hero-search-title">Cari dataset</h2>
+
+          <form class="ipb-search-form"
+                action="{{ h.url_for('dataset.search') }}"
+                method="get">
+            <input
+              type="text"
+              name="q"
+              class="ipb-search-input"
+              placeholder="Cari dataset di sini">
+
+            <button type="submit" class="ipb-search-button">
+              <i class="fa fa-search ipb-search-button-icon" aria-hidden="true"></i>
+              <span>Cari</span>
+            </button>
+          </form>
+
+          <a href="{{ h.url_for('dataset.search') }}" class="ipb-hero-all-link">
+            atau <span>lihat semua dataset</span> &rarr;
+          </a>
+        </div>
+      </div>
+
+      <div class="ipb-hero-right">
+        {# Ilustrasi jaringan dikendalikan melalui CSS (hero-network.png) #}
+      </div>
+    </div>
+  </section>
+
+  {# Section: Pintu akses data IPB #}
+  <section class="ipb-section ipb-section-access">
+    <div class="container">
+      <h2 class="ipb-section-title">Pintu Akses Data IPB University</h2>
+      <p class="ipb-section-subtitle">
+        Portal Data menghadirkan akses mudah ke berbagai data IPB untuk mendukung riset,
+        inovasi, dan kolaborasi publik. Anda dapat melakukan:
+      </p>
+
+      <div class="ipb-feature-grid">
+
+        <div class="ipb-feature-card">
+          <div class="ipb-feature-icon">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <h3 class="ipb-feature-card-title">Eksplor dataset IPB</h3>
+          <p class="ipb-feature-card-desc">
+            Akses 100+ dataset tepercaya dari IPB secara gratis untuk dianalisis.
+          </p>
+        </div>
+
+        <div class="ipb-feature-card">
+          <div class="ipb-feature-icon">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </div>
+          <h3 class="ipb-feature-card-title">Riset dengan data IPB</h3>
+          <p class="ipb-feature-card-desc">
+            Temukan dan gunakan ratusan dataset dari IPB untuk mendukung kegiatan risetmu.
+          </p>
+        </div>
+
+        <div class="ipb-feature-card">
+          <div class="ipb-feature-icon">
+            <i class="fa fa-flask" aria-hidden="true"></i>
+          </div>
+          <h3 class="ipb-feature-card-title">Eksperimen data IPB</h3>
+          <p class="ipb-feature-card-desc">
+            Unduh dataset dengan mudah dan eksperimen menggunakan data pilihanmu.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {# Section: Berbagai topik dataset #}
+  <section class="ipb-section ipb-section-topics">
+    <div class="container ipb-topics-inner">
+      <div class="ipb-topics-text">
+        <h2 class="ipb-section-title ipb-section-title-light">
+          Berbagai Topik Dataset
+        </h2>
+        <p class="ipb-section-subtitle ipb-section-subtitle-light">
+          Portal Data menyajikan 100+ dataset yang dikelompokkan dalam 5 topik utama.
+          Lebih mudah menemukan data sesuai kebutuhan Anda.
+        </p>
+      </div>
+
+      <div class="ipb-topics-grid">
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+        <a href="{{ h.url_for('dataset.search') }}" class="ipb-topic-pill">
+          <span class="ipb-topic-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+          Topik 1
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {# Section: Update dataset terbaru (kartu contoh) #}
+  <section class="ipb-section ipb-section-datasets">
+    <div class="container">
+
+      <div class="ipb-datasets-header">
+        <h2 class="ipb-section-title-center">Update Dataset Terbaru</h2>
+        <p class="ipb-section-subtitle-center">
+          Miliki dataset terbaru dengan tetap update terkait informasi pembaruan pada dataset
+        </p>
+      </div>
+
+      <div class="ipb-dataset-grid">
+
+        {# Kartu dataset 1 (contoh) #}
+        <article class="ipb-dataset-card">
+          <div class="ipb-dataset-card-header">Dataset</div>
+          <div class="ipb-dataset-card-body">
+            <span class="ipb-dataset-updated-label">Update: 02/02/2025</span>
+
+            <h3 class="ipb-dataset-title">
+              Data Judul Dataset Di Sini Judul Dataset Di Sini Judul Dataset Di Sini
+            </h3>
+
+            <div class="ipb-dataset-tags-line">
+              <span class="ipb-tag-topic">Topik</span>
+              <span class="ipb-tag-separator">|</span>
+              <span class="ipb-tag-format ipb-tag-format-pdf">PDF</span>
+              <span class="ipb-tag-format ipb-tag-format-csv">CSV</span>
+            </div>
+
+            <p class="ipb-dataset-period">Jul 2025–Aug 2025</p>
+
+            <p class="ipb-dataset-desc">
+              Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset …
+            </p>
+          </div>
+          <div class="ipb-dataset-card-footer">
+            <a href="{{ h.url_for('dataset.read', id='contoh-dataset-1') }}"
+               class="ipb-dataset-arrow">
+              &rarr;
+            </a>
+          </div>
+        </article>
+
+        {# Kartu dataset 2 (contoh) #}
+        <article class="ipb-dataset-card">
+          <div class="ipb-dataset-card-header">Dataset</div>
+          <div class="ipb-dataset-card-body">
+            <span class="ipb-dataset-updated-label">Update: 02/02/2025</span>
+
+            <h3 class="ipb-dataset-title">
+              Data Judul Dataset Di Sini Judul Dataset Di Sini Judul Dataset Di Sini
+            </h3>
+
+            <div class="ipb-dataset-tags-line">
+              <span class="ipb-tag-topic">Topik</span>
+              <span class="ipb-tag-separator">|</span>
+              <span class="ipb-tag-format ipb-tag-format-pdf">PDF</span>
+              <span class="ipb-tag-format ipb-tag-format-csv">CSV</span>
+            </div>
+
+            <p class="ipb-dataset-period">Jul 2025–Aug 2025</p>
+
+            <p class="ipb-dataset-desc">
+              Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset …
+            </p>
+          </div>
+          <div class="ipb-dataset-card-footer">
+            <a href="{{ h.url_for('dataset.read', id='contoh-dataset-2') }}"
+               class="ipb-dataset-arrow">
+              &rarr;
+            </a>
+          </div>
+        </article>
+
+        {# Kartu dataset 3 (contoh) #}
+        <article class="ipb-dataset-card">
+          <div class="ipb-dataset-card-header">Dataset</div>
+          <div class="ipb-dataset-card-body">
+            <span class="ipb-dataset-updated-label">Update: 02/02/2025</span>
+
+            <h3 class="ipb-dataset-title">
+              Data Judul Dataset Di Sini Judul Dataset Di Sini Judul Dataset Di Sini
+            </h3>
+
+            <div class="ipb-dataset-tags-line">
+              <span class="ipb-tag-topic">Topik</span>
+              <span class="ipb-tag-separator">|</span>
+              <span class="ipb-tag-format ipb-tag-format-pdf">PDF</span>
+              <span class="ipb-tag-format ipb-tag-format-csv">CSV</span>
+            </div>
+
+            <p class="ipb-dataset-period">Jul 2025–Aug 2025</p>
+
+            <p class="ipb-dataset-desc">
+              Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset Deskripsi dataset …
+            </p>
+          </div>
+          <div class="ipb-dataset-card-footer">
+            <a href="{{ h.url_for('dataset.read', id='contoh-dataset-3') }}"
+               class="ipb-dataset-arrow">
+              &rarr;
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <a href="{{ h.url_for('dataset.search') }}" class="ipb-datasets-view-all">
+        Lihat semua
+      </a>
+
+    </div>
+  </section>
+
+{% endblock %}

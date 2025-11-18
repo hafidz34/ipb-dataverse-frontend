@@ -1,0 +1,867 @@
+/* =========================
+   HEADER
+   ========================= */
+
+.ipb-header {
+    background: #ffffff;
+}
+
+.ipb-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+
+.ipb-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.ipb-logo-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.75rem;
+}
+
+.ipb-logo-text {
+    line-height: 1.1;
+}
+
+.ipb-logo-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #23408e;
+    letter-spacing: 0.03em;
+}
+
+.ipb-logo-subtitle {
+    font-size: 0.8rem;
+    color: #23408e;
+}
+
+.ipb-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.ipb-nav-link {
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 400;
+}
+
+.ipb-nav-link:hover {
+    color: #23408e;
+}
+
+.ipb-nav-link--active {
+    color: #23408e;
+    font-weight: 600;
+}
+
+
+/* =========================
+   HERO LANDING PAGE
+   ========================= */
+
+.ipb-hero {
+    position: relative;
+    color: #ffffff;
+    padding: 4rem 0 4rem;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(38, 60, 146, 0.65) 0%,
+            rgba(38, 60, 146, 0.65) 30%,
+            rgba(38, 60, 146, 0.65) 60%,
+            rgba(38, 60, 146, 0.65) 100%
+        ),
+        url("/hero-gedung-ahn.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ipb-hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.ipb-hero-left {
+    max-width: 560px;
+}
+
+.ipb-hero-eyebrow {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.ipb-hero-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+}
+
+.ipb-hero-desc {
+    font-size: 1rem;
+    max-width: 480px;
+    margin-bottom: 1.75rem;
+}
+
+
+/* =========================
+   SEARCH BLOCK (HERO)
+   ========================= */
+
+.ipb-hero-search {
+    margin-top: 2rem;
+}
+
+.ipb-hero-search-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.ipb-search-form {
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    max-width: 720px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+}
+
+.ipb-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 1.5rem;
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    color: #111827;
+    height: 3rem;
+}
+
+.ipb-search-input::placeholder {
+    color: #9ca3af;
+}
+
+.ipb-search-button {
+    border: none;
+    background: #263C92;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.75rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1rem;
+    height: 3rem;
+    white-space: nowrap;
+}
+
+.ipb-search-button span {
+    font-size: 1.15rem;
+}
+
+.ipb-search-button:hover {
+    background: #1f3570;
+}
+
+.ipb-search-button-icon {
+    font-size: 1rem;
+}
+
+.ipb-hero-all-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.ipb-hero-all-link span {
+    font-weight: 600;
+}
+
+
+/* Placeholder kolom kanan hero (jaringan ikon) */
+.ipb-hero-right {
+    flex: 1;
+    min-height: 280px;
+    background-image: url("/hero-network.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center right;
+}
+
+
+/* =========================
+   SECTION GENERIC
+   ========================= */
+
+.ipb-section {
+    padding: 3.5rem 0;
+    background: #ffffff;
+}
+
+.ipb-section-intro {
+    text-align: center;
+}
+
+.ipb-section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1f2933;
+    margin-bottom: 0.5rem;
+}
+
+.ipb-section-subtitle {
+    font-size: 0.98rem;
+    color: #4b5563;
+    max-width: 720px;
+    margin: 0 auto 2.5rem auto;
+}
+
+
+/* =========================
+   PINTU AKSES DATA IPB
+   ========================= */
+
+.ipb-section-access {
+    text-align: center;
+}
+
+.ipb-section-access .ipb-section-title {
+    font-size: 2.1rem;
+    color: #008CC7;
+}
+
+.ipb-section-access .ipb-section-subtitle {
+    font-size: 1.05rem;
+    color: #4b5563;
+    max-width: 900px;
+    margin: 0.75rem auto 2.75rem auto;
+}
+
+.ipb-section-access .ipb-feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.ipb-section-access .ipb-feature-card {
+    flex: 1 1 320px;
+    max-width: 350px;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    padding: 1.75rem 1.75rem 1.5rem;
+    text-align: left;
+}
+
+.ipb-section-access .ipb-feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    background: #263C92;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+.ipb-section-access .ipb-feature-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #23408e;
+    margin-bottom: 0.5rem;
+}
+
+.ipb-section-access .ipb-feature-card-desc {
+    font-size: 0.98rem;
+    color: #4b5563;
+    margin: 0;
+}
+
+
+/* =========================
+   BERBAGAI TOPIK DATASET
+   ========================= */
+
+.ipb-section-topics {
+    background: linear-gradient(90deg, #263C92 0%, #1f3570 40%, #132168 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 4rem;
+}
+
+.ipb-topics-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ipb-topics-text {
+    max-width: 520px;
+}
+
+.ipb-section-title-light {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.ipb-section-subtitle-light {
+    color: #e5e7eb;
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.ipb-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 1rem;
+    max-width: 640px;
+}
+
+.ipb-topic-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 2.2rem;
+    border-radius: 0.9rem;
+    background: #ffffff;
+    color: #23408e;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ipb-topic-pill:hover {
+    background: #e5edff;
+}
+
+.ipb-topic-icon {
+    margin-right: 0.5rem;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+    .ipb-topics-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.75rem;
+    }
+
+    .ipb-topics-grid {
+        max-width: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .ipb-topics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .ipb-topics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================
+   UPDATE DATASET TERBARU
+   ========================= */
+
+.ipb-section-datasets {
+    background: #ffffff;
+}
+
+.ipb-datasets-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.ipb-section-title-center {
+    font-size: 2.1rem;
+    color: #00A0D2;
+}
+
+.ipb-section-subtitle-center {
+    max-width: 720px;
+    margin: 0.75rem auto 0;
+    color: #4b5563;
+}
+
+.ipb-dataset-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.ipb-dataset-card {
+    background: #ffffff;
+    border-radius: 1.1rem;
+    box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.04),
+        0 18px 40px rgba(15, 23, 42, 0.20);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.ipb-dataset-card-header {
+    background: #E4ECFF;
+    color: #23408e;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.ipb-dataset-card-body {
+    padding: 1.25rem 1.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.ipb-dataset-updated-label {
+    display: block;
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+.ipb-dataset-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #23408e;
+    margin: 0 0 0.65rem 0;
+}
+
+.ipb-dataset-tags-line {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.ipb-tag-topic {
+    color: #059669;
+    font-weight: 500;
+}
+
+.ipb-tag-separator {
+    margin: 0 0.35rem;
+    color: #9ca3af;
+}
+
+.ipb-tag-format {
+    font-weight: 500;
+    margin-right: 0.35rem;
+}
+
+.ipb-tag-format-pdf {
+    color: #DC2626;
+}
+
+.ipb-tag-format-csv {
+    color: #EA580C;
+}
+
+.ipb-dataset-period {
+    margin: 0.7rem 0 0.4rem;
+    font-size: 0.9rem;
+}
+
+.ipb-dataset-desc {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin: 0 0 0.75rem 0;
+}
+
+.ipb-dataset-card-footer {
+    padding: 0 1.5rem 1.1rem;
+    text-align: right;
+}
+
+.ipb-dataset-arrow {
+    display: inline-block;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    color: #23408e;
+    font-size: 1.6rem;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.ipb-dataset-arrow:hover {
+    transform: translateX(3px);
+}
+
+.ipb-datasets-view-all {
+    display: block;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3A3A3A;
+    text-decoration: underline;
+}
+
+.ipb-datasets-view-all:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .ipb-dataset-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .ipb-dataset-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.ipb-footer {
+    margin-top: 3rem;
+    background: linear-gradient(180deg, #263C92 0%, #132168 100%);
+    color: #ffffff;
+    padding: 2.5rem 0 2.5rem;
+    font-size: 0.9rem;
+}
+
+.ipb-footer-inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 5rem;
+}
+
+.ipb-footer-column-title {
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+}
+
+.ipb-footer-link {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+}
+
+.ipb-footer-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .ipb-footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================
+   LOGIN PAGE
+   ========================= */
+
+.ipb-login-section {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    padding: 4rem 0 3rem;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(38, 60, 146, 0.65) 0%,
+            rgba(38, 60, 146, 0.65) 30%,
+            rgba(38, 60, 146, 0.65) 60%,
+            rgba(38, 60, 146, 0.65) 100%
+        ),
+        url("/hero-gedung-ahn.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ipb-login-card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.04),
+        0 24px 60px rgba(15, 23, 42, 0.35);
+    padding: 2.25rem 2.5rem 2.25rem;
+}
+
+.ipb-login-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #263C92;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: 0.04em;
+}
+
+.ipb-login-subtitle {
+    text-align: center;
+    font-size: 0.98rem;
+    color: #4b5563;
+    margin: 0 0 2rem 0;
+}
+
+.ipb-login-form {
+    margin-bottom: 1.5rem;
+}
+
+.ipb-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.ipb-form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.35rem;
+}
+
+.ipb-form-input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.ipb-form-input:focus {
+    border-color: #263C92;
+    box-shadow: 0 0 0 1px #263C92;
+}
+
+/* Hide default Edge/IE password icons */
+.ipb-form-input-password::-ms-reveal,
+.ipb-form-input-password::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.ipb-password-wrapper {
+    position: relative;
+}
+
+.ipb-password-icon {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.ipb-login-help {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+}
+
+.ipb-login-link {
+    color: #263C92;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.ipb-login-link:hover {
+    text-decoration: underline;
+}
+
+.ipb-login-button {
+    margin-top: 1.5rem;
+    width: 100%;
+    border: none;
+    border-radius: 0.6rem;
+    background: #263C92;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+}
+
+.ipb-login-button:hover {
+    background: #1f3570;
+}
+
+.ipb-login-register {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+@media (max-width: 640px) {
+    .ipb-login-card {
+        padding: 2rem 1.5rem 2rem;
+        border-radius: 1.25rem;
+    }
+}
+
+/* =========================
+   HELP PAGE
+   ========================= */
+
+.ipb-help-hero {
+    color: #ffffff;
+    padding: 2.75rem 0 2.75rem;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(38, 60, 146, 0.70) 0%,
+            rgba(38, 60, 146, 0.70) 30%,
+            rgba(38, 60, 146, 0.70) 60%,
+            rgba(38, 60, 146, 0.70) 100%
+        ),
+        url("/hero-gedung-ahn.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ipb-help-header {
+    padding: 0.5rem 0;
+}
+
+.ipb-help-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.25rem 0;
+}
+
+.ipb-help-subtitle {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* SECTION ISI (ACCORDION) */
+.ipb-help-section {
+    background: #ffffff;
+    padding: 2.5rem 0 3.5rem;
+}
+
+.ipb-help-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Kartu accordion */
+.ipb-help-item {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.04),
+        0 18px 40px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+}
+
+/* Tombol bar atas */
+.ipb-help-item-toggle {
+    width: 100%;
+    padding: 1.15rem 1.75rem;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.ipb-help-item-title {
+    color: #007E9E;
+    text-align: left;
+}
+
+.ipb-help-item-icon {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.ipb-help-item-icon i {
+    transition: transform 0.2s ease;
+}
+
+/* Isi yang bisa dibuka/tutup */
+.ipb-help-item-body {
+    padding: 0 1.75rem 1.5rem;
+    border-top: none;
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.6;
+    display: none;
+}
+
+/* Saat open */
+.ipb-help-item.ipb-help-item--open .ipb-help-item-body {
+    display: block;
+}
+
+.ipb-help-item.ipb-help-item--open .ipb-help-item-icon i {
+    transform: rotate(180deg);
+}
+
+/* Responsive kecil */
+@media (max-width: 640px) {
+    .ipb-help-hero {
+        padding: 2rem 0 2rem;
+    }
+
+    .ipb-help-title {
+        font-size: 1.8rem;
+    }
+
+    .ipb-help-section {
+        padding: 2rem 0 2.5rem;
+    }
+}

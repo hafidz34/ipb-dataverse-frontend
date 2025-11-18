@@ -1,0 +1,38 @@
+{# Header utama IPB Dataverse #}
+
+{% set current_path = request.path %}
+
+<header class="ipb-header">
+  <div class="container ipb-header-inner">
+
+    {# Area logo portal data #}
+    <a href="{{ h.url_for('home.index') }}" class="ipb-logo">
+      <img src="/logo-ipb.png" alt="Logo IPB University" class="ipb-logo-img">
+      <div class="ipb-logo-text">
+        <div class="ipb-logo-title">PORTAL DATA</div>
+        <div class="ipb-logo-subtitle">IPB UNIVERSITY</div>
+      </div>
+    </a>
+
+    {# Navigasi utama #}
+    <nav class="ipb-nav">
+      <a href="{{ h.url_for('home.index') }}"
+         class="ipb-nav-link{% if current_path == '/' %} ipb-nav-link--active{% endif %}">
+        Beranda
+      </a>
+      <a href="{{ h.url_for('dataset.search') }}"
+         class="ipb-nav-link{% if current_path.startswith('/dataset') %} ipb-nav-link--active{% endif %}">
+        Dataset
+      </a>
+      <a href="/help"
+         class="ipb-nav-link{% if current_path.startswith('/help') %} ipb-nav-link--active{% endif %}">
+        Bantuan
+      </a>
+      <a href="{{ h.url_for('user.login') }}"
+         class="ipb-nav-link{% if current_path.startswith('/user') %} ipb-nav-link--active{% endif %}">
+        Login
+      </a>
+    </nav>
+
+  </div>
+</header>

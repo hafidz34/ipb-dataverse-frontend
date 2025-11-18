@@ -1,0 +1,101 @@
+{# Halaman login IPB Dataverse #}
+
+{% ckan_extends %}
+
+{# Judul tab browser #}
+{% block page_title %}Login - IPB Dataverse{% endblock %}
+
+{# Konten utama halaman login #}
+{% block content %}
+<section class="ipb-login-section">
+  <div class="container">
+    <div class="ipb-login-card">
+
+      <h1 class="ipb-login-title">LOGIN</h1>
+      <p class="ipb-login-subtitle">
+        Silahkan masuk menggunakan ID IPB dan kata sandi Anda
+      </p>
+
+      <form class="ipb-login-form" method="post" action="">
+        {{ h.csrf_input() }}
+
+        <div class="ipb-form-group">
+          <label class="ipb-form-label" for="field-login">ID IPB</label>
+          <input
+            id="field-login"
+            type="text"
+            name="login"
+            value="{{ c.login or '' }}"
+            class="ipb-form-input"
+            placeholder="Masukkan email">
+        </div>
+
+        <div class="ipb-form-group">
+          <label class="ipb-form-label" for="field-password">Kata sandi</label>
+          <div class="ipb-password-wrapper">
+            <input
+              id="field-password"
+              type="password"
+              name="password"
+              class="ipb-form-input ipb-form-input-password"
+              placeholder="Masukkan kata sandi">
+
+            {# Ikon untuk toggle show/hide password #}
+            <span class="ipb-password-icon">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </span>
+          </div>
+
+          <div class="ipb-login-help">
+            Lupa kata sandi?
+            <a href="#" class="ipb-login-link">klik disini</a>
+          </div>
+        </div>
+
+        <button type="submit" class="ipb-login-button">
+          Login
+        </button>
+      </form>
+
+      <p class="ipb-login-register">
+        Belum memiliki akun?
+        <a href="#" class="ipb-login-link">
+          Registrasi di sini
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{# Mengosongkan footer pada halaman login #}
+{% block footer %}{% endblock %}
+
+{# Script untuk toggle show/hide password #}
+{% block scripts %}
+  {{ super() }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var passwordInput = document.getElementById('field-password');
+      var toggle = document.querySelector('.ipb-password-icon');
+
+      if (passwordInput && toggle) {
+        toggle.addEventListener('click', function () {
+          var isPassword = passwordInput.getAttribute('type') === 'password';
+          passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+          var icon = toggle.querySelector('i');
+          if (icon) {
+            if (isPassword) {
+              icon.classList.remove('fa-eye');
+              icon.classList.add('fa-eye-slash');
+            } else {
+              icon.classList.remove('fa-eye-slash');
+              icon.classList.add('fa-eye');
+            }
+          }
+        });
+      }
+    });
+  </script>
+{% endblock %}

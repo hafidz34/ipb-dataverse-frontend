@@ -1,0 +1,14 @@
+# ipb_dataverse_theme-js:
+#   filter: rjsmin
+#   output: ckanext-ipb_dataverse_theme/%(version)s-ipb_dataverse_theme.js
+#   contents:
+#     - js/ipb_dataverse_theme.js
+#   extra:
+#     preload:
+#       - base/main
+
+# ipb_dataverse_theme-css:
+#   filter: cssrewrite
+#   output: ckanext-ipb_dataverse_theme/%(version)s-ipb_dataverse_theme.css
+#   contents:
+#     - css/ipb_dataverse_theme.css

@@ -1,0 +1,137 @@
+{# Halaman Bantuan IPB Dataverse - /help #}
+{% extends "page.html" %}
+
+{% block page_title %}Bantuan - IPB Dataverse{% endblock %}
+
+{% block content %}
+
+  {# Section hero bantuan dengan foto gedung #}
+  <section class="ipb-help-hero">
+    <div class="container">
+      <header class="ipb-help-header">
+        <h1 class="ipb-help-title">BANTUAN</h1>
+        <p class="ipb-help-subtitle">
+          Berikut panduan penggunaan platform portal data IPB
+        </p>
+      </header>
+    </div>
+  </section>
+
+  {# Section konten bantuan (accordion) #}
+  <section class="ipb-help-section">
+    <div class="container">
+      <div class="ipb-help-accordion">
+
+        {# Item 1: Panduan unggah data (default terbuka) #}
+        <div class="ipb-help-item ipb-help-item--open">
+          <button type="button" class="ipb-help-item-toggle">
+            <span class="ipb-help-item-title">Panduan unggah data</span>
+            <span class="ipb-help-item-icon">
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+          </button>
+          <div class="ipb-help-item-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              Nulla vulputate sem leo, at vestibulum diam elementum at. 
+              Quisque vestibulum suscipit velit, in gravida arcu elementum lobortis. 
+              Quisque id placerat ante, eu volutpat dolor. 
+              Praesent viverra est eget massa faucibus vestibulum. 
+              Morbi eget tortor pretium, tristique lectus et, viverra mi. 
+              Morbi eget ex vel arcu rhoncus suscipit. Morbi vitae auctor metus. 
+              Donec facilisis pulvinar tellus mattis auctor. 
+              Fusce mattis dui a dolor aliquet, eu sollicitudin eros scelerisque. 
+              Quisque mattis non libero nec accumsan. Nam vehicula eu ligula in consequat. 
+              Praesent eget lorem ornare, fringilla massa vel, fermentum purus. 
+              Maecenas sodales ornare velit, et porttitor odio aliquet ut.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              Nulla vulputate sem leo, at vestibulum diam elementum at. 
+              Quisque vestibulum suscipit velit, in gravida arcu elementum lobortis. 
+              Quisque id placerat ante, eu volutpat dolor. 
+              Praesent viverra est eget massa faucibus vestibulum. 
+              Morbi eget tortor pretium, tristique lectus et, viverra mi. 
+              Morbi eget ex vel arcu rhoncus suscipit. Morbi vitae auctor metus. 
+              Donec facilisis pulvinar tellus mattis auctor. 
+              Fusce mattis dui a dolor aliquet, eu sollicitudin eros scelerisque. 
+              Quisque mattis non libero nec accumsan. Nam vehicula eu ligula in consequat. 
+              Praesent eget lorem ornare, fringilla massa vel, fermentum purus. 
+              Maecenas sodales ornare velit, et porttitor odio aliquet ut.
+            </p>
+          </div>
+        </div>
+
+        {# Item 2: Panduan akses data #}
+        <div class="ipb-help-item">
+          <button type="button" class="ipb-help-item-toggle">
+            <span class="ipb-help-item-title">Panduan akses data</span>
+            <span class="ipb-help-item-icon">
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+          </button>
+          <div class="ipb-help-item-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              Nulla vulputate sem leo, at vestibulum diam elementum at. 
+              Quisque vestibulum suscipit velit, in gravida arcu elementum lobortis. 
+              Quisque id placerat ante, eu volutpat dolor. 
+              Praesent viverra est eget massa faucibus vestibulum. 
+              Morbi eget tortor pretium, tristique lectus et, viverra mi. 
+              Morbi eget ex vel arcu rhoncus suscipit. Morbi vitae auctor metus. 
+              Donec facilisis pulvinar tellus mattis auctor. 
+              Fusce mattis dui a dolor aliquet, eu sollicitudin eros scelerisque. 
+              Quisque mattis non libero nec accumsan. Nam vehicula eu ligula in consequat. 
+              Praesent eget lorem ornare, fringilla massa vel, fermentum purus. 
+              Maecenas sodales ornare velit, et porttitor odio aliquet ut.
+            </p>
+          </div>
+        </div>
+
+        {# Item 3: Narahubung #}
+        <div class="ipb-help-item">
+          <button type="button" class="ipb-help-item-toggle">
+            <span class="ipb-help-item-title">Narahubung</span>
+            <span class="ipb-help-item-icon">
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+          </button>
+          <div class="ipb-help-item-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              Nulla vulputate sem leo, at vestibulum diam elementum at. 
+              Quisque vestibulum suscipit velit, in gravida arcu elementum lobortis. 
+              Quisque id placerat ante, eu volutpat dolor. 
+              Praesent viverra est eget massa faucibus vestibulum. 
+              Morbi eget tortor pretium, tristique lectus et, viverra mi. 
+              Morbi eget ex vel arcu rhoncus suscipit. Morbi vitae auctor metus. 
+              Donec facilisis pulvinar tellus mattis auctor. 
+              Fusce mattis dui a dolor aliquet, eu sollicitudin eros scelerisque. 
+              Quisque mattis non libero nec accumsan. Nam vehicula eu ligula in consequat. 
+              Praesent eget lorem ornare, fringilla massa vel, fermentum purus. 
+              Maecenas sodales ornare velit, et porttitor odio aliquet ut.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{# script untuk buka/tutup accordion #}
+{% block scripts %}
+  {{ super() }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var toggles = document.querySelectorAll('.ipb-help-item-toggle');
+      toggles.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.closest('.ipb-help-item');
+          if (!item) return;
+          item.classList.toggle('ipb-help-item--open');
+        });
+      });
+    });
+  </script>
+{% endblock %}
