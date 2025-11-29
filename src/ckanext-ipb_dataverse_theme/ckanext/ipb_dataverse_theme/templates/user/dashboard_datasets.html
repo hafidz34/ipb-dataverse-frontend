@@ -1,0 +1,300 @@
+{% extends "user/dashboard.html" %}
+
+{# --- 1. CSS DIGABUNG DISINI --- #}
+{% block styles %}
+  {{ super() }}
+  <style>
+    /* Global Container */
+    .dashboard-container {
+        background-color: #fff;
+        padding: 0 15px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    /* Sidebar Customization */
+    .nav-pills.nav-stacked > li > a {
+        border-radius: 4px;
+        color: #555;
+        padding: 10px 15px;
+        font-weight: 500;
+    }
+    /* Highlight Sidebar Aktif (Biru Tua) */
+    .nav-pills.nav-stacked > li.active > a, 
+    .nav-pills.nav-stacked > li.active > a:hover {
+        background-color: #23378B !important; 
+        color: #fff !important;
+        font-weight: bold;
+    }
+
+    /* Header Halaman */
+    .page-heading-custom {
+        color: #23378B;
+        font-weight: bold;
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        border-bottom: none;
+    }
+
+    /* Baris Kontrol (Search, Limit, Add) */
+    .controls-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Input Search Custom */
+    .search-box-custom .form-control {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        width: 250px !important;
+    }
+    .search-btn-custom {
+        background-color: #23378B;
+        border-color: #23378B;
+        color: white;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .search-btn-custom:hover {
+        background-color: #1a2a6b;
+        color: white;
+    }
+
+    /* Tombol Tambah Dataset */
+    .btn-add-custom {
+        background-color: #23378B;
+        border-color: #23378B;
+        color: white;
+        padding: 9px 20px;
+        border-radius: 4px;
+        font-weight: 500;
+        margin-left: 10px;
+    }
+    .btn-add-custom:hover {
+        background-color: #1a2a6b;
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Tabel Custom */
+    .table-custom {
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+    }
+    .table-custom thead tr {
+        background-color: #E6F0FF; /* Warna Biru Muda Header */
+    }
+    .table-custom thead th {
+        border-bottom: none;
+        color: #333;
+        font-weight: bold;
+        padding: 15px;
+        vertical-align: middle;
+    }
+    .table-custom tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        border-top: 1px solid #eee;
+    }
+
+    /* Status Badges */
+    .badge-status {
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: capitalize;
+        display: inline-block;
+        min-width: 80px;
+        text-align: center;
+    }
+    .badge-published {
+        background-color: #E2F7E6; /* Hijau Muda */
+        color: #28A745;
+    }
+    .badge-draft {
+        background-color: #FFF3CD; /* Kuning Muda */
+        color: #856404;
+    }
+
+    /* Tombol Aksi (Edit/Hapus) */
+    .btn-icon-action {
+        width: 35px;
+        height: 35px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        color: white;
+        margin: 0 2px;
+        text-decoration: none;
+    }
+    .btn-edit-custom {
+        background-color: #23378B;
+    }
+    .btn-delete-custom {
+        background-color: #C0392B;
+    }
+    .btn-icon-action:hover {
+        opacity: 0.9;
+        color: white;
+    }
+
+    /* Text Tipe File */
+    .file-type-text {
+        color: #555;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+  </style>
+{% endblock %}
+
+
+{# --- 2. SIDEBAR KIRI --- #}
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <div style="padding: 20px 0;">
+    <ul class="nav nav-pills nav-stacked">
+      <li>
+        <a href="{{ h.url_for('dashboard.index') }}">
+          <i class="fa fa-th-large" style="margin-right: 10px; width: 20px;"></i> Dashboard
+        </a>
+      </li>
+      {# Class Active disini agar biru #}
+      <li class="active">
+        <a href="{{ h.url_for('dashboard.datasets') }}">
+          <i class="fa fa-pencil-square-o" style="margin-right: 10px; width: 20px;"></i> Dataset Saya
+        </a>
+      </li>
+      <li>
+        <a href="/bantuan">
+          <i class="fa fa-question-circle" style="margin-right: 10px; width: 20px;"></i> Bantuan
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+
+{# --- 3. KONTEN UTAMA --- #}
+{% block primary_content_inner %}
+<div class="dashboard-container">
+  
+  <h1 class="page-heading-custom">DATASET SAYA</h1>
+
+  {# Area Filter & Tombol #}
+  <div class="controls-row">
+    
+    {# Kiri: Show Entries #}
+    <div class="form-inline">
+      <label style="font-weight: normal; color: #555;">Show 
+        <select class="form-control input-sm" style="width: 60px; display: inline-block; margin: 0 5px; height: 34px;" onchange="window.location.href='?limit='+this.value">
+          <option value="12" {% if request.params.limit == '12' %}selected{% endif %}>12</option>
+          <option value="25" {% if request.params.limit == '25' %}selected{% endif %}>25</option>
+          <option value="50" {% if request.params.limit == '50' %}selected{% endif %}>50</option>
+        </select> 
+        items
+      </label>
+    </div>
+
+    {# Kanan: Search & Add #}
+    <div class="form-inline" style="display: flex;">
+      <form action="" method="get" class="search-box-custom" style="display: flex;">
+        <input type="text" class="form-control" name="q" value="{{ c.q }}" placeholder="Cari dataset disini...">
+        <button class="btn search-btn-custom" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+
+      <a href="{{ h.url_for('dataset.new') }}" class="btn btn-add-custom">
+        Tambah Dataset
+      </a>
+    </div>
+  </div>
+
+  {# Tabel Data #}
+  {% if page.items %}
+  <div class="table-responsive">
+    <table class="table table-custom table-hover">
+      <thead>
+        <tr>
+          <th style="width: 50px;">No</th>
+          <th>Nama</th>
+          <th>Tipe file</th>
+          <th>Status</th>
+          <th>Update terakhir</th>
+          <th class="text-center" style="width: 120px;">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pkg in page.items %}
+        <tr>
+          {# No #}
+          <td>{{ loop.index + ((page.page - 1) * page.items_per_page) }}</td>
+          
+          {# Nama #}
+          <td>
+            <a href="{{ h.url_for('dataset.read', id=pkg.name) }}" style="font-weight: 600; color: #333; font-size: 14px;">
+              {{ pkg.title or pkg.name }}
+            </a>
+            <div style="font-size: 12px; color: #999; margin-top: 3px;">
+                {{ pkg.notes|truncate(40) if pkg.notes else '' }}
+            </div>
+          </td>
+
+          {# Tipe File #}
+          <td>
+            {% for res in pkg.resources %}
+               <span class="file-type-text">{{ res.format }}</span>
+            {% endfor %}
+          </td>
+
+          {# Status #}
+          <td>
+            {% if pkg.private %}
+              <span class="badge-status badge-draft">Draft</span>
+            {% else %}
+              <span class="badge-status badge-published">Published</span>
+            {% endif %}
+          </td>
+
+          {# Update Terakhir #}
+          <td>{{ h.render_datetime(pkg.metadata_modified, date_format='%d/%m/%Y') }}</td>
+
+          {# Aksi #}
+          <td class="text-center">
+            <a href="{{ h.url_for('dataset.edit', id=pkg.name) }}" class="btn-icon-action btn-edit-custom" title="Edit">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a href="{{ h.url_for('dataset.delete', id=pkg.name) }}" class="btn-icon-action btn-delete-custom" title="Hapus" data-module="confirm-action" data-module-content="Apakah Anda yakin ingin menghapus dataset ini?">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# Pagination #}
+  <div class="pull-right">
+    {{ page.pager() }}
+  </div>
+
+  {% else %}
+    <div class="well text-center" style="background: white; border: 1px dashed #ddd; padding: 40px;">
+        <h3 style="margin-top: 0; color: #777;">Belum ada dataset</h3>
+        <p>Silakan klik tombol "Tambah Dataset" di pojok kanan atas.</p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

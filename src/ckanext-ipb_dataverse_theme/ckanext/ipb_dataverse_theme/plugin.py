@@ -22,7 +22,7 @@ class IpbDataverseThemePlugin(plugins.SingletonPlugin):
         # Static/public files (CSS, gambar, dll)
         toolkit.add_public_directory(config, "public")
         # Kalau nanti perlu webassets:
-        # toolkit.add_resource("public", "ipb_dataverse_theme")
+        toolkit.add_resource("public", "ipb_dataverse_theme")
 
     def get_blueprint(self):
         """

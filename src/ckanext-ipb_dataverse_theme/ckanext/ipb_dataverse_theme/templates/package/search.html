@@ -1,0 +1,521 @@
+{% ckan_extends %}
+
+{# 1. Page Title #}
+{% block page_title %}Pencarian Dataset - Portal Data IPB{% endblock %}
+
+{# 2. Remove Sidebar & Breadcrumbs #}
+{% block breadcrumb_content %}{% endblock %}
+{% block secondary_content %}{% endblock %}
+
+{# 3. STYLES #}
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/globals.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/styleguide.css" />
+  <link rel="stylesheet" href="/ipb_dataverse.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* --- CORE RESET & LAYOUT --- */
+    body { background-color: #FFFFFF !important; }
+    #content .wrapper { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+    #content .container { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    .span3, aside { display: none !important; }
+    .span9, .row { width: 100% !important; margin: 0 !important; padding: 0 !important; float: none !important; }
+    hr { display: none !important; }
+
+    /* --- HERO --- */
+    .ipb-hero-full {
+        position: relative;
+        color: #ffffff;
+        padding: 4rem 0 4rem;
+        background-image: linear-gradient(90deg, rgba(38, 60, 146, 0.65) 0%, rgba(38, 60, 146, 0.65) 100%), url("/hero-gedung-ahn.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .hero-container { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* --- SEARCH UI --- */
+    .search-stack { margin-top: 30px; display: flex; flex-direction: column; gap: 20px; }
+    
+    .search-bar-wrapper {
+        display: flex; background: white; border-radius: 8px; padding: 6px; width: 100%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15); align-items: center;
+    }
+    .search-input-field { flex: 1; border: none; padding: 12px 20px; font-size: 16px; outline: none; background: transparent; color: #333; }
+    .search-btn-blue {
+        background: #2D489C; color: white; border: none; padding: 10px 35px; border-radius: 6px; 
+        font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 15px; margin-right: 2px;
+    }
+    .search-btn-blue:hover { background: #1e3a8a; }
+
+    .filter-row { display: flex; gap: 15px; flex-wrap: wrap; width: 100%; position: relative; }
+    
+    .ipb-select {
+        height: 48px; padding: 0 40px 0 20px; border-radius: 6px; border: none; background: white;
+        min-width: 180px; color: #333; font-size: 14px; cursor: pointer; appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 10px auto;
+    }
+
+    .custom-dropdown-container { position: relative; }
+    .dropdown-trigger-btn {
+        height: 48px; padding: 0 40px 0 20px; border-radius: 6px; border: none; background: white;
+        min-width: 180px; color: #333; font-size: 14px; cursor: pointer; text-align: left;
+        display: flex; align-items: center; position: relative;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px;
+    }
+    .dropdown-trigger-btn::after {
+        content: ''; position: absolute; right: 15px; top: 42%; width: 10px; height: 10px;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat; background-size: contain;
+    }
+
+    /* Popups */
+    .custom-menu-popup {
+        display: none; position: absolute; top: 55px; left: 0; background: white;
+        border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); padding: 10px 0; z-index: 100; color: #333;
+    }
+    .custom-menu-popup.active { display: block; }
+    
+    /* --- DATEPICKER --- */
+    .date-popup { width: 340px; padding: 15px; user-select: none; }
+    .date-input-row { display: flex; gap: 10px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+    .date-box { 
+        flex: 1; border: 1px solid #ddd; border-radius: 4px; padding: 6px 10px; 
+        display: flex; align-items: center; background: #f9f9f9;
+        cursor: pointer; transition: 0.2s;
+    }
+    .date-box.active-input { border-color: #2D489C; background: #fff; box-shadow: 0 0 0 2px rgba(45, 72, 156, 0.1); }
+    .date-box input { border: none; width: 100%; outline: none; font-size: 13px; color: #333; background: transparent; cursor: pointer; }
+    .date-label { font-size: 10px; color: #999; margin-bottom: 2px; display: block; }
+
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .cal-title { font-weight: bold; font-size: 15px; color: #333; cursor: pointer; padding: 5px 10px; border-radius: 4px; }
+    .cal-title:hover { background: #eff6ff; color: #2D489C; }
+    .cal-nav { cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #666; }
+    .cal-nav:hover { background: #f0f0f0; color: #333; }
+    .cal-content { min-height: 240px; }
+
+    .grid-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .grid-months, .grid-years { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .day-name { font-size: 11px; color: #999; text-align: center; margin-bottom: 5px; font-weight: 600; }
+    
+    .cell-day { 
+        height: 34px; display: flex; align-items: center; justify-content: center; 
+        font-size: 13px; border-radius: 4px; cursor: pointer; color: #333;
+    }
+    .cell-day:hover { background: #eff6ff; color: #2D489C; }
+    .cell-day.empty { cursor: default; pointer-events: none; }
+    .cell-day.selected { background: #2D489C; color: white; font-weight: bold; }
+    .cell-day.in-range { background: #e0e7ff; color: #2D489C; }
+    
+    .cell-tile { 
+        height: 50px; display: flex; align-items: center; justify-content: center; 
+        font-size: 14px; border-radius: 6px; cursor: pointer; border: 1px solid #f0f0f0; 
+    }
+    .cell-tile:hover { background: #eff6ff; border-color: #2D489C; color: #2D489C; }
+    .cell-tile.current { background: #2D489C; color: white; border-color: #2D489C; }
+
+    /* --- DISABLED STATE FOR FUTURE DATES --- */
+    .cell-disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: #f9f9f9;
+        color: #ccc;
+        border-color: #eee;
+    }
+
+    .cal-footer { margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-between; }
+    .btn-reset { background: none; border: none; color: #666; font-size: 12px; cursor: pointer; text-decoration: underline; }
+    .btn-apply { background: #2D489C; color: white; border: none; padding: 6px 20px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+
+    .sort-wrapper { margin-left: auto; }
+    .sort-popup { width: 100%; min-width: 240px; right: 0; left: auto; padding: 5px 0; }
+    .sort-item { padding: 12px 20px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+    .sort-item:hover { background: #F0F4FE; color: #2D489C; }
+
+    .results-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px 20px; }
+    .ipb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; }
+    .result-card { background: white; border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s; }
+    .result-card:hover { transform: translateY(-3px); }
+    .card-head { background: #F0F4FE; color: #2D489C; padding: 10px; text-align: center; font-weight: bold; font-size: 14px; }
+    .card-body { padding: 20px; display: flex; flex-direction: column; height: 100%; }
+
+    @media (max-width: 992px) { .ipb-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .ipb-grid { grid-template-columns: 1fr; } .filter-row { flex-direction: column; } .sort-wrapper { margin-left: 0; } .sort-popup { width: 100%; left: 0; right: auto; } .date-popup { width: 100%; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+  
+  {# --- DYNAMIC VARIABLES --- #}
+  {% set current_sort = request.args.get('sort', 'score desc, metadata_modified desc') %}
+  {% set current_q = request.args.get('q', '') %}
+  {% set current_group = request.args.get('groups', '') %}
+  {% set current_format = request.args.get('res_format', '') %}
+  {% set start_val = request.args.get('start_date', '') %}
+  {% set end_val = request.args.get('end_date', '') %}
+  
+  {# Label Logic #}
+  {% set periode_label = 'Periode' %}
+  {% if start_val and end_val %}
+     {% set periode_label = 'Periode: ' ~ start_val ~ ' s/d ' ~ end_val %}
+  {% elif start_val %}
+     {% set periode_label = 'Periode: ' ~ start_val ~ ' - ...' %}
+  {% endif %}
+
+  {# Sort Logic #}
+  {% set sort_label = 'Relevansi' %}
+  {% if 'metadata_modified desc' in current_sort and 'score' not in current_sort %}{% set sort_label = 'Terbaru' %}{% endif %}
+  {% if 'metadata_created asc' in current_sort %}{% set sort_label = 'Terlama' %}{% endif %}
+
+  {# Facets Logic #}
+  {% set group_items = [] %}
+  {% set format_items = [] %}
+  {% if search_facets %}
+    {% for facet in search_facets %}
+        {% if facet.name == 'groups' %}{% set group_items = facet.items %}{% endif %}
+        {% if facet.name == 'res_format' %}{% set format_items = facet.items %}{% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if not group_items and search_facets is mapping %}
+     {% set group_items = search_facets.get('groups', {}).get('items', []) %}
+     {% set format_items = search_facets.get('res_format', {}).get('items', []) %}
+  {% endif %}
+
+  <div class="ipb-hero-full">
+    <div class="hero-container">
+      <h1 style="font-size: 36px; font-weight: 700; margin-bottom: 10px; color: white;">DATASET</h1>
+      <p style="font-size: 16px; color: #E0E0E0; max-width: 600px; margin-bottom: 0;">
+        Temukan dan gunakan ratusan dataset dari IPB untuk mendukung kegiatan risetmu.
+      </p>
+
+      <div class="search-stack">
+        <label style="color: white; font-size: 14px; margin-bottom: -10px;">Cari dataset</label>
+        
+        <form method="get" action="{{ h.url_for('dataset.search') }}" id="mainSearchForm">
+            {# Search Bar #}
+            <div class="search-bar-wrapper">
+                <input type="text" name="q" value="{{ current_q }}" class="search-input-field" placeholder="Cari dataset di sini">
+                <button type="submit" class="search-btn-blue">
+                    <i class="fa fa-search"></i> Cari
+                </button>
+            </div>
+
+            {# Filter Row #}
+            <div class="filter-row" style="margin-top: 20px;">
+                
+                {# A. Topik #}
+                <select class="ipb-select" name="groups" onchange="this.form.submit()">
+                    <option value="">Topik (Semua)</option>
+                    {% for item in group_items %}
+                        <option value="{{ item.name }}" {% if current_group == item.name %}selected{% endif %}>
+                            {{ item.display_name }} ({{ item.count }})
+                        </option>
+                    {% endfor %}
+                    {% if not group_items %}<option disabled>Tidak ada topik</option>{% endif %}
+                </select>
+
+                {# B. Smart Calendar #}
+                <div class="custom-dropdown-container">
+                    <button type="button" class="dropdown-trigger-btn" onclick="toggleDateMenu()">
+                        {{ periode_label }}
+                    </button>
+                    
+                    <div class="custom-menu-popup date-popup" id="datePopup">
+                        <div class="date-input-row">
+                            <div class="date-box" id="boxStart" onclick="setActiveInput('start')">
+                                <div>
+                                    <span class="date-label">Mulai</span>
+                                    <input type="text" name="start_date" id="inputStart" placeholder="YYYY-MM-DD" value="{{ start_val }}" readonly>
+                                </div>
+                            </div>
+                            <div class="date-box" id="boxEnd" onclick="setActiveInput('end')">
+                                <div>
+                                    <span class="date-label">Berakhir</span>
+                                    <input type="text" name="end_date" id="inputEnd" placeholder="YYYY-MM-DD" value="{{ end_val }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cal-header">
+                            <div class="cal-nav" onclick="navigate(-1)"><i class="fa fa-chevron-left"></i></div>
+                            <div class="cal-title" id="calTitle" onclick="zoomOut()">Loading...</div>
+                            <div class="cal-nav" onclick="navigate(1)"><i class="fa fa-chevron-right"></i></div>
+                        </div>
+
+                        <div class="cal-content" id="calContent"></div>
+                        
+                        <div class="cal-footer">
+                             <button type="button" class="btn-reset" onclick="clearDates()">Reset</button>
+                             <button type="button" class="btn-apply" onclick="document.getElementById('mainSearchForm').submit()">Terapkan</button>
+                        </div>
+                    </div>
+                </div>
+
+                {# C. Format #}
+                <select class="ipb-select" name="res_format" onchange="this.form.submit()">
+                    <option value="">Format Data</option>
+                    {% for item in format_items %}
+                        <option value="{{ item.name }}" {% if current_format == item.name %}selected{% endif %}>
+                            {{ item.display_name }} ({{ item.count }})
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                {# D. Sort #}
+                <div class="custom-dropdown-container sort-wrapper">
+                    <input type="hidden" name="sort" id="inputSort" value="{{ current_sort }}">
+                    <button type="button" class="dropdown-trigger-btn" style="min-width: 240px;" onclick="toggleSortMenu()">
+                        Urut berdasarkan: {{ sort_label }}
+                    </button>
+                    <div class="custom-menu-popup sort-popup" id="sortPopup">
+                        <div class="sort-item" onclick="submitSort('score desc, metadata_modified desc')">Relevansi</div>
+                        <div class="sort-item" onclick="submitSort('metadata_modified desc')">Terbaru</div>
+                        <div class="sort-item" onclick="submitSort('metadata_created asc')">Terlama</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {# RESULTS GRID #}
+  <div class="results-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; margin-top: 40px;">
+        <h3 style="font-size: 18px; color: #333; margin: 0;">
+            <strong>{{ page.item_count }}</strong> Dataset ditemukan
+        </h3>
+        <div style="font-size: 14px; color: #666;">
+            {{ page.item_count }} hasil
+        </div>
+    </div>
+
+    <div class="ipb-grid">
+      {% for pkg in page.items %}
+      <article class="result-card">
+        <div class="card-head">Dataset</div>
+        <div class="card-body">
+            <div style="font-size: 11px; color: #888; margin-bottom: 8px;">
+                Update: {{ h.render_datetime(pkg.metadata_modified, date_format='%d/%m/%Y') }}
+            </div>
+            <h3 style="margin: 0 0 12px 0;">
+                <a href="{{ h.url_for('dataset.read', id=pkg.name) }}" style="color: #2D489C; text-decoration: none; font-weight: 700; font-size: 16px; line-height: 1.4;">
+                    {{ pkg.title or pkg.name }}
+                </a>
+            </h3>
+            <div style="display: flex; gap: 6px; font-size: 12px; font-weight: bold; margin-bottom: 12px; align-items: center;">
+                <span style="color: #00B0D0;">{{ pkg.organization.title if pkg.organization else 'Umum' }}</span>
+                <span style="color: #ccc;">|</span>
+                {% for res in pkg.resources %}
+                    <span style="color: #E05A5A;">{{ res.format }}</span>
+                {% endfor %}
+            </div>
+            <div style="font-size: 13px; color: #555; line-height: 1.5; flex-grow: 1;">
+                {{ h.markdown_extract(pkg.notes, extract_length=100) }}
+            </div>
+        </div>
+      </article>
+      {% else %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px;">
+            <h3>Tidak ada dataset yang ditemukan.</h3>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; padding-top: 40px;">
+       {{ page.pager()|safe }}
+    </div>
+  </div>
+
+  <script>
+    const MONTHS_ID = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    const DAYS_ID = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    
+    let viewMode = 'months';
+    let cursorDate = new Date();
+    let activeInput = 'start';
+    const TODAY = new Date(); // To restrict future dates
+
+    function toggleDateMenu() {
+        let p = document.getElementById("datePopup");
+        document.getElementById("sortPopup").style.display = "none";
+        
+        if(p.style.display !== "block") {
+            p.style.display = "block";
+            setActiveInput(document.getElementById('inputStart').value ? 'end' : 'start');
+            viewMode = 'months'; 
+            render();
+        } else {
+            p.style.display = "none";
+        }
+    }
+
+    function setActiveInput(type) {
+        activeInput = type;
+        document.getElementById('boxStart').className = type === 'start' ? 'date-box active-input' : 'date-box';
+        document.getElementById('boxEnd').className = type === 'end' ? 'date-box active-input' : 'date-box';
+    }
+
+    function navigate(dir) {
+        if(viewMode === 'days') cursorDate.setMonth(cursorDate.getMonth() + dir);
+        else if (viewMode === 'months') cursorDate.setFullYear(cursorDate.getFullYear() + dir);
+        else if (viewMode === 'years') cursorDate.setFullYear(cursorDate.getFullYear() + (dir * 12));
+        render();
+    }
+
+    function zoomOut() {
+        if(viewMode === 'days') viewMode = 'months';
+        else if(viewMode === 'months') viewMode = 'years';
+        render();
+    }
+
+    function render() {
+        const titleEl = document.getElementById('calTitle');
+        const contentEl = document.getElementById('calContent');
+        contentEl.innerHTML = '';
+
+        if(viewMode === 'days') renderDays(titleEl, contentEl);
+        else if(viewMode === 'months') renderMonths(titleEl, contentEl);
+        else if(viewMode === 'years') renderYears(titleEl, contentEl);
+    }
+
+    function renderYears(title, container) {
+        let currentYear = cursorDate.getFullYear();
+        let startYear = currentYear - 5;
+        let endYear = currentYear + 6;
+        title.innerText = `${startYear} - ${endYear}`;
+        let grid = document.createElement('div');
+        grid.className = 'grid-years';
+
+        for(let y = startYear; y <= endYear; y++) {
+            let cell = document.createElement('div');
+            cell.className = 'cell-tile';
+            cell.innerText = y;
+            if(y === new Date().getFullYear()) cell.classList.add('current');
+            
+            // Disable Future Years
+            if(y > TODAY.getFullYear()) {
+                cell.classList.add('cell-disabled');
+            } else {
+                cell.onclick = (e) => { e.stopPropagation(); cursorDate.setFullYear(y); viewMode = 'months'; render(); };
+            }
+            grid.appendChild(cell);
+        }
+        container.appendChild(grid);
+    }
+
+    function renderMonths(title, container) {
+        title.innerText = cursorDate.getFullYear();
+        let grid = document.createElement('div');
+        grid.className = 'grid-months';
+
+        MONTHS_ID.forEach((m, idx) => {
+            let cell = document.createElement('div');
+            cell.className = 'cell-tile';
+            cell.innerText = m;
+            
+            // Disable Future Months
+            let isFutureYear = cursorDate.getFullYear() > TODAY.getFullYear();
+            let isFutureMonth = (cursorDate.getFullYear() === TODAY.getFullYear()) && (idx > TODAY.getMonth());
+            
+            if(isFutureYear || isFutureMonth) {
+                cell.classList.add('cell-disabled');
+            } else {
+                cell.onclick = (e) => { e.stopPropagation(); cursorDate.setMonth(idx); viewMode = 'days'; render(); };
+            }
+            grid.appendChild(cell);
+        });
+        container.appendChild(grid);
+    }
+
+    function renderDays(title, container) {
+        let year = cursorDate.getFullYear();
+        let month = cursorDate.getMonth();
+        title.innerText = `${MONTHS_ID[month]} ${year}`;
+
+        let header = document.createElement('div');
+        header.className = 'grid-days';
+        DAYS_ID.forEach(d => {
+            let el = document.createElement('div'); el.className = 'day-name'; el.innerText = d; header.appendChild(el);
+        });
+        container.appendChild(header);
+
+        let grid = document.createElement('div');
+        grid.className = 'grid-days';
+        let firstDay = new Date(year, month, 1).getDay(); 
+        let daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for(let i=0; i<firstDay; i++) {
+            let cell = document.createElement('div'); cell.className = 'cell-day empty'; grid.appendChild(cell);
+        }
+
+        let startVal = document.getElementById('inputStart').value;
+        let endVal = document.getElementById('inputEnd').value;
+
+        for(let d=1; d<=daysInMonth; d++) {
+            let cell = document.createElement('div');
+            cell.className = 'cell-day';
+            cell.innerText = d;
+            let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+
+            // Check if future date
+            let checkDate = new Date(year, month, d);
+            if(checkDate > TODAY) {
+                cell.classList.add('cell-disabled');
+            } else {
+                if(dateStr === startVal || dateStr === endVal) cell.classList.add('selected');
+                if(startVal && endVal && dateStr > startVal && dateStr < endVal) cell.classList.add('in-range');
+                cell.onclick = (e) => { e.stopPropagation(); selectDate(dateStr); };
+            }
+            grid.appendChild(cell);
+        }
+        container.appendChild(grid);
+    }
+
+    function selectDate(dateStr) {
+        if(activeInput === 'start') {
+            document.getElementById('inputStart').value = dateStr;
+            setActiveInput('end'); 
+        } else {
+            document.getElementById('inputEnd').value = dateStr;
+            let s = document.getElementById('inputStart').value;
+            let e = document.getElementById('inputEnd').value;
+            if(s && e && s > e) {
+                document.getElementById('inputStart').value = e;
+                document.getElementById('inputEnd').value = s;
+            }
+        }
+        render(); 
+    }
+
+    function clearDates() {
+        document.getElementById('inputStart').value = '';
+        document.getElementById('inputEnd').value = '';
+        document.getElementById('mainSearchForm').submit();
+    }
+
+    function toggleSortMenu() {
+        let p = document.getElementById("sortPopup");
+        document.getElementById("datePopup").style.display = "none";
+        p.style.display = (p.style.display === "block") ? "none" : "block";
+    }
+    
+    function submitSort(val) {
+        document.getElementById('inputSort').value = val;
+        document.getElementById('mainSearchForm').submit();
+    }
+
+    window.onclick = function(e) {
+        if (!e.target.closest('.custom-dropdown-container')) {
+            document.getElementById("datePopup").style.display = "none";
+            document.getElementById("sortPopup").style.display = "none";
+        }
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,147 @@
+/* --- RESET LAYOUT --- */
+body { background-color: #FFFFFF !important; }
+#content .wrapper { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+#content .container { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+.span3, aside { display: none !important; }
+.span9, .row { width: 100% !important; margin: 0 !important; padding: 0 !important; float: none !important; }
+hr { display: none !important; }
+
+/* --- HERO SECTION --- */
+
+.ipb-hero-full {
+position: relative;
+color: #ffffff;
+padding: 4rem 0 4rem;
+background-image:
+    linear-gradient(
+        90deg,
+        rgba(38, 60, 146, 0.65) 0%,
+        rgba(38, 60, 146, 0.65) 30%,
+        rgba(38, 60, 146, 0.65) 60%,
+        rgba(38, 60, 146, 0.65) 100%
+    ),
+    url("/hero-gedung-ahn.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- SEARCH BAR & FILTERS --- */
+
+.search-stack { 
+    margin-top: 30px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+/* 1. THE BIG WHITE SEARCH BAR */
+.search-bar-wrapper {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    padding: 6px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    align-items: center;
+}
+
+.search-input-field {
+    flex: 1;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+    color: #333;
+}
+
+.search-btn-blue {
+    background: #2D489C; 
+    color: white; 
+    border: none; 
+    padding: 10px 35px;
+    border-radius: 6px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    font-size: 15px;
+    margin-right: 2px;
+}
+
+.search-btn-blue:hover { background: #1e3a8a; }
+
+/* 2. THE FILTERS ROW */
+.filter-row { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+    width: 100%;
+}
+
+/* 3. THE DROPDOWNS (White Pills) */
+.ipb-select {
+    height: 48px;
+    /* FIXED: Increased right padding to 40px so text doesn't hit the arrow */
+    padding: 0 40px 0 20px;
+    border-radius: 6px;
+    border: none;
+    background: white;
+    min-width: 180px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none; 
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 10px auto;
+}
+
+/* Sort Dropdown alignment & Width Fix */
+.sort-wrapper { margin-left: auto; }
+
+/* FIXED: Specific width for the sort dropdown to fit "Urut berdasarkan: Relevansi" */
+.sort-wrapper .ipb-select {
+    min-width: 240px; 
+}
+
+
+/* --- GRID --- */
+.results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px 20px;
+}
+.ipb-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px;
+}
+.result-card {
+    background: white; border: 1px solid #E0E0E0; border-radius: 8px;
+    overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s;
+}
+.result-card:hover { transform: translateY(-3px); }
+.card-head {
+    background: #F0F4FE; color: #2D489C; padding: 10px; text-align: center; font-weight: bold; font-size: 14px;
+}
+.card-body { padding: 20px; display: flex; flex-direction: column; height: 100%; }
+
+/* Responsive */
+@media (max-width: 992px) { .ipb-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { 
+    .ipb-grid { grid-template-columns: 1fr; } 
+    .filter-row { flex-direction: column; }
+    .sort-wrapper { margin-left: 0; }
+    /* Reset width on mobile if needed */
+    .sort-wrapper .ipb-select { min-width: 100%; }
+}

@@ -1,3 +1,202 @@
+/* =========================================
+   HEADER & USER DROPDOWN STYLES
+   ========================================= */
+
+.ipb-header { 
+    background: #fff; 
+    border-bottom: 1px solid #f0f0f0; 
+    position: relative; 
+    z-index: 1000; 
+}
+
+.ipb-header-inner { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 0; 
+    height: 70px; 
+}
+
+/* --- LOGO --- */
+.ipb-logo { 
+    display: flex; 
+    align-items: center; 
+    text-decoration: none; 
+}
+.ipb-logo-img { 
+    width: 40px; 
+    height: 40px; 
+    margin-right: 10px; 
+}
+.ipb-logo-text { 
+    line-height: 1.1; 
+}
+.ipb-logo-title { 
+    font-weight: 700; 
+    color: #23408e; 
+    font-size: 16px; 
+}
+.ipb-logo-subtitle { 
+    font-size: 12px; 
+    color: #23408e; 
+}
+
+/* --- NAVIGASI TENGAH (ADMIN) --- */
+.ipb-nav-center {
+    position: absolute; 
+    left: 50%; 
+    transform: translateX(-50%);
+    display: flex; 
+    gap: 40px;
+}
+
+/* --- NAVIGASI KANAN --- */
+.ipb-nav-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+}
+.ipb-nav-right-public { 
+    display: flex; 
+    align-items: center; 
+    gap: 25px; 
+    margin-left: auto; 
+}
+
+/* --- LINK STYLES --- */
+/* Link Default (Abu-abu Regular) */
+.ipb-link-regular { 
+    font-weight: 400; 
+    color: #374151; 
+    text-decoration: none; 
+    font-size: 15px; 
+    transition: color 0.2s;
+}
+.ipb-link-regular:hover { 
+    color: #23408e; 
+    text-decoration: none; 
+}
+
+/* Link Active State (Biru Tebal) */
+.active-menu {
+    color: #23408e !important;
+    font-weight: 700 !important;
+}
+
+/* Separator */
+.ipb-vertical-sep { 
+    width: 1px; 
+    height: 35px; 
+    background: #e5e7eb; 
+}
+
+/* --- USER DROPDOWN --- */
+.ipb-user-wrapper { 
+    position: relative; 
+    display: inline-block; 
+}
+
+.ipb-user-btn {
+    background: transparent; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    cursor: pointer; 
+    padding: 5px 10px; 
+    border-radius: 8px; 
+    text-align: left;
+}
+.ipb-user-btn:hover { 
+    background: #f9fafb; 
+}
+
+.ipb-avatar { 
+    width: 38px; 
+    height: 38px; 
+    background: #E0F2FE; 
+    color: #374151; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.ipb-info { 
+    display: flex; 
+    flex-direction: column; 
+    line-height: 1.2; 
+}
+.ipb-name { 
+    font-size: 14px; 
+    font-weight: 700; 
+    color: #111827; 
+}
+.ipb-role { 
+    font-size: 11px; 
+    color: #6b7280; 
+}
+.ipb-chevron { 
+    font-size: 12px; 
+    color: #6b7280; 
+    transition: 0.2s; 
+}
+
+/* --- MENU BOX --- */
+.ipb-menu-box {
+    display: none; 
+    position: absolute; 
+    top: 100%; 
+    right: 0; 
+    width: 200px;
+    background: white; 
+    border: 1px solid #e5e7eb; 
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+    margin-top: 5px; 
+    padding: 5px 0; 
+    z-index: 9999;
+}
+
+.ipb-menu-box.show { 
+    display: block !important; 
+}
+
+.ipb-menu-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    color: #374151; 
+    font-size: 14px; 
+}
+.ipb-menu-item:hover { 
+    background: #f9fafb; 
+    color: #23408e; 
+    text-decoration: none; 
+}
+
+.ipb-divider { 
+    height: 1px; 
+    background: #e5e7eb; 
+    margin: 5px 0; 
+}
+
+.item-danger:hover { 
+    background: #fef2f2; 
+    color: #dc2626; 
+}
+
+/* Responsif */
+@media (max-width: 900px) {
+    .ipb-nav-center { 
+        position: static; 
+        transform: none; 
+        margin-left: auto; 
+        margin-right: 20px; 
+    }
+}
 /* =========================
    HEADER
    ========================= */
@@ -63,6 +262,264 @@
     font-weight: 600;
 }
 
+/* --- USER DROPDOWN STYLING (FIXED) --- */
+
+.ipb-user-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.ipb-user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.ipb-user-trigger:hover, 
+.ipb-user-trigger.active { /* Tambahkan state active */
+    background-color: #f3f4f6;
+}
+
+.ipb-user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #E0F2FE;
+    color: #374151;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.ipb-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+    text-align: left; /* Pastikan teks rata kiri */
+}
+
+.ipb-user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.ipb-user-role {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.ipb-user-chevron {
+    font-size: 12px;
+    color: #4b5563;
+    margin-left: 5px;
+    transition: transform 0.2s;
+}
+
+/* Rotasi panah saat menu aktif */
+.ipb-user-trigger.active .ipb-user-chevron {
+    transform: rotate(180deg);
+}
+
+/* --- MENU DROPDOWN --- */
+.ipb-dropdown-menu {
+    display: none; /* Default sembunyi */
+    position: absolute;
+    top: 110%; /* Memberi sedikit jarak ke bawah */
+    right: 0;
+    width: 200px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); /* Shadow lebih tebal */
+    z-index: 9999; /* Pastikan di atas elemen lain */
+    padding: 5px 0;
+}
+
+/* Class ini akan ditambahkan oleh JavaScript */
+.ipb-dropdown-menu.show {
+    display: block;
+}
+
+.ipb-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #374151;
+    text-decoration: none;
+    transition: background 0.1s;
+}
+
+.ipb-dropdown-item:hover {
+    background-color: #f9fafb;
+    color: #23408e;
+}
+
+.ipb-dropdown-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 5px 0;
+}
+
+.ipb-text-danger:hover {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+}
+
+/* --- USER DROPDOWN STYLING --- */
+
+/* Container relatif agar menu dropdown muncul tepat di bawahnya */
+.ipb-user-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tampilan Trigger (Tombol Profil) */
+.ipb-user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.ipb-user-trigger:hover {
+    background-color: #f3f4f6; /* Efek hover halus */
+}
+
+/* Avatar Bulat Biru Muda */
+.ipb-user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #E0F2FE; /* Biru sangat muda (seperti gambar) */
+    color: #374151; /* Warna ikon abu gelap */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+/* Area Teks Nama & Role */
+.ipb-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.ipb-user-name {
+    font-size: 14px;
+    font-weight: 600; /* Bold */
+    color: #111827;   /* Hitam pekat */
+}
+
+.ipb-user-role {
+    font-size: 12px;
+    color: #6b7280;   /* Abu-abu */
+    margin-top: 2px;
+}
+
+/* Panah Chevron */
+.ipb-user-chevron {
+    font-size: 12px;
+    color: #4b5563;
+    margin-left: 5px;
+    transition: transform 0.2s;
+}
+
+/* --- ISI MENU DROPDOWN --- */
+.ipb-dropdown-menu {
+    display: none; /* Tersembunyi default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    margin-top: 5px;
+    padding: 5px 0;
+}
+
+/* Tampilkan menu saat container di-hover */
+.ipb-dropdown-menu.show {
+    display: block;
+}
+
+/* Tambahkan z-index tinggi agar menu muncul di atas Hero image/Slider */
+.ipb-dropdown-menu {
+    /* Pastikan z-index lebih tinggi dari elemen lain */
+    z-index: 9999 !important; 
+    
+    /* Perbaikan Celah: Geser sedikit ke atas agar rapat dengan tombol */
+    margin-top: 5px; 
+}
+
+/* Putar panah saat hover */
+.ipb-user-dropdown-container:hover .ipb-user-chevron {
+    transform: rotate(180deg);
+}
+
+/* Item dalam Dropdown */
+.ipb-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #374151;
+    text-decoration: none;
+    transition: background 0.1s;
+}
+
+.ipb-dropdown-item:hover {
+    background-color: #f9fafb;
+    color: #23408e;
+}
+
+.ipb-dropdown-item i {
+    width: 20px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.ipb-dropdown-item:hover i {
+    color: #23408e;
+}
+
+/* Garis Pemisah */
+.ipb-dropdown-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 5px 0;
+}
+
+/* Style khusus Logout (Merah) */
+.ipb-text-danger:hover {
+    color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+}
+.ipb-text-danger:hover i {
+    color: #dc2626 !important;
+}
 
 /* =========================
    HERO LANDING PAGE

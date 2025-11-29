@@ -2,10 +2,18 @@
 
 {% set current_path = request.path %}
 
+{# --- 1. LOGIKA HAK AKSES --- #}
+{% set is_privileged = false %}
+{% if c.userobj %}
+    {% if c.userobj.sysadmin or c.userobj.get_groups('organization', 'admin') %}
+        {% set is_privileged = true %}
+    {% endif %}
+{% endif %}
+
 <header class="ipb-header">
   <div class="container ipb-header-inner">
 
-    {# Area logo portal data #}
+    {# --- 2. LOGO (KIRI) --- #}
     <a href="{{ h.url_for('home.index') }}" class="ipb-logo">
       <img src="/logo-ipb.png" alt="Logo IPB University" class="ipb-logo-img">
       <div class="ipb-logo-text">
@@ -14,25 +22,206 @@
       </div>
     </a>
 
-    {# Navigasi utama #}
-    <nav class="ipb-nav">
-      <a href="{{ h.url_for('home.index') }}"
-         class="ipb-nav-link{% if current_path == '/' %} ipb-nav-link--active{% endif %}">
-        Beranda
-      </a>
-      <a href="{{ h.url_for('dataset.search') }}"
-         class="ipb-nav-link{% if current_path.startswith('/dataset') %} ipb-nav-link--active{% endif %}">
-        Dataset
-      </a>
-      <a href="/help"
-         class="ipb-nav-link{% if current_path.startswith('/help') %} ipb-nav-link--active{% endif %}">
-        Bantuan
-      </a>
-      <a href="{{ h.url_for('user.login') }}"
-         class="ipb-nav-link{% if current_path.startswith('/user') %} ipb-nav-link--active{% endif %}">
-        Login
-      </a>
-    </nav>
+    {# --- 3. NAVIGASI (TENGAH & KANAN) --- #}
+    
+    {% if is_privileged %}
+        
+        {# === TAMPILAN ADMIN (Menu di Tengah) === #}
+        
+        <div class="ipb-nav-center">
+            {# PERBAIKAN DI SINI: Ubah class jadi ipb-link-regular #}
+            <a href="{{ h.url_for('dashboard.datasets') }}" 
+               class="ipb-link-regular {% if current_path.startswith('/dashboard') %}active-menu{% endif %}">
+               Dataset Saya
+            </a>
+
+            <a href="/help" 
+               class="ipb-link-regular {% if current_path.startswith('/help') %}active-menu{% endif %}">
+               Bantuan
+            </a>
+        </div>
+
+        {# Profil Admin di Kanan #}
+        <div class="ipb-nav-right">
+            <div class="ipb-vertical-sep"></div>
+            
+            <div class="ipb-user-wrapper">
+                <button id="ipbUserTrigger" type="button" class="ipb-user-btn" onclick="toggleDropdown(event)">
+                    <div class="ipb-avatar"><i class="fa fa-user"></i></div>
+                    <div class="ipb-info">
+                        <span class="ipb-name">{{ c.userobj.display_name }}</span>
+                        <span class="ipb-role">
+                            {% if c.userobj.sysadmin %}System Admin{% else %}LMITD{% endif %}
+                        </span>
+                    </div>
+                    <i id="ipbChevron" class="fa fa-chevron-down ipb-chevron"></i>
+                </button>
+
+                <div id="ipbUserMenu" class="ipb-menu-box">
+                    <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="ipb-menu-item">
+                        <i class="fa fa-user-circle"></i> Profil
+                    </a>
+                    
+                    {% if c.userobj.sysadmin %}
+                        <a href="{{ h.url_for('admin.index') }}" class="ipb-menu-item" style="color: #d9534f;">
+                            <i class="fa fa-cogs"></i> Sysadmin
+                        </a>
+                    {% else %}
+                        <a href="{{ h.url_for('dashboard.organizations') }}" class="ipb-menu-item" style="color: #23408e;">
+                            <i class="fa fa-briefcase"></i> Admin Org
+                        </a>
+                    {% endif %}
+
+                    <div class="ipb-divider"></div>
+                    <a href="{{ h.url_for('user.logout') }}" class="ipb-menu-item item-danger">
+                        <i class="fa fa-sign-out"></i> Keluar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        {# === TAMPILAN PUBLIC (Menu di Kanan) === #}
+        
+        <div class="ipb-nav-right-public">
+          <a href="{{ h.url_for('home.index') }}" 
+             class="ipb-link-regular {% if current_path == '/' %}active-menu{% endif %}">
+             Beranda
+          </a>
+
+          <a href="{{ h.url_for('dataset.search') }}" 
+             class="ipb-link-regular {% if current_path.startswith('/dataset') %}active-menu{% endif %}">
+             Dataset
+          </a>
+
+          <a href="/help" 
+             class="ipb-link-regular {% if current_path.startswith('/help') %}active-menu{% endif %}">
+             Bantuan
+          </a>
+
+          {% if c.userobj %}
+              <div class="ipb-user-wrapper">
+                <button type="button" class="ipb-user-btn" onclick="toggleDropdown(event)">
+                    <div class="ipb-avatar"><i class="fa fa-user"></i></div>
+                    <div class="ipb-info">
+                        <span class="ipb-name">{{ c.userobj.display_name }}</span>
+                        <span class="ipb-role">User</span>
+                    </div>
+                    <i class="fa fa-chevron-down ipb-chevron"></i>
+                </button>
+                <div id="ipbUserMenuPublic" class="ipb-menu-box">
+                    <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="ipb-menu-item"><i class="fa fa-user-circle"></i> Profil</a>
+                    <div class="ipb-divider"></div>
+                    <a href="{{ h.url_for('user.logout') }}" class="ipb-menu-item item-danger"><i class="fa fa-sign-out"></i> Keluar</a>
+                </div>
+              </div>
+          {% else %}
+              <a href="{{ h.url_for('user.login') }}" 
+                 class="ipb-link-regular {% if current_path.startswith('/user') %}active-menu{% endif %}" 
+                 style="margin-left: 10px; font-weight: 600;">
+                 Login
+              </a>
+          {% endif %}
+        </div>
+
+    {% endif %}
 
   </div>
 </header>
+
+{# --- 4. CSS STYLE --- #}
+<style>
+    .ipb-header { background: #fff; border-bottom: 1px solid #f0f0f0; position: relative; z-index: 1000; }
+    .ipb-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; height: 70px; }
+    
+    .ipb-logo { display: flex; align-items: center; text-decoration: none; }
+    .ipb-logo-img { width: 40px; height: 40px; margin-right: 10px; }
+    .ipb-logo-text { line-height: 1.1; }
+    .ipb-logo-title { font-weight: 700; color: #23408e; font-size: 16px; }
+    .ipb-logo-subtitle { font-size: 12px; color: #23408e; }
+
+    /* Layouts */
+    .ipb-nav-center {
+        position: absolute; left: 50%; transform: translateX(-50%);
+        display: flex; gap: 40px;
+    }
+    .ipb-nav-right { display: flex; align-items: center; gap: 20px; }
+    .ipb-nav-right-public { display: flex; align-items: center; gap: 25px; margin-left: auto; }
+
+    /* Link Default (Abu-abu Regular) */
+    .ipb-link-regular { 
+        font-weight: 400; 
+        color: #374151; /* Abu gelap */
+        text-decoration: none; 
+        font-size: 15px; 
+        transition: color 0.2s;
+    }
+    .ipb-link-regular:hover { color: #23408e; text-decoration: none; }
+
+    /* Link Active State (Biru Tebal) */
+    .active-menu {
+        color: #23408e !important;
+        font-weight: 700 !important;
+    }
+
+    .ipb-vertical-sep { width: 1px; height: 35px; background: #e5e7eb; }
+
+    /* Dropdown User */
+    .ipb-user-wrapper { position: relative; display: inline-block; }
+    .ipb-user-btn {
+        background: transparent; border: none; display: flex; align-items: center; gap: 10px;
+        cursor: pointer; padding: 5px 10px; border-radius: 8px; text-align: left;
+    }
+    .ipb-user-btn:hover { background: #f9fafb; }
+    .ipb-avatar { width: 38px; height: 38px; background: #E0F2FE; color: #374151; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .ipb-info { display: flex; flex-direction: column; line-height: 1.2; }
+    .ipb-name { font-size: 14px; font-weight: 700; color: #111827; }
+    .ipb-role { font-size: 11px; color: #6b7280; }
+    .ipb-chevron { font-size: 12px; color: #6b7280; transition: 0.2s; }
+
+    .ipb-menu-box {
+        display: none; position: absolute; top: 100%; right: 0; width: 200px;
+        background: white; border: 1px solid #e5e7eb; border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin-top: 5px; padding: 5px 0; z-index: 9999;
+    }
+    .ipb-menu-box.show { display: block !important; }
+    .ipb-menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 15px; text-decoration: none; color: #374151; font-size: 14px; }
+    .ipb-menu-item:hover { background: #f9fafb; color: #23408e; text-decoration: none; }
+    .ipb-divider { height: 1px; background: #e5e7eb; margin: 5px 0; }
+    .item-danger:hover { background: #fef2f2; color: #dc2626; }
+
+    @media (max-width: 900px) {
+        .ipb-nav-center { position: static; transform: none; margin-left: auto; margin-right: 20px; }
+    }
+</style>
+
+{# --- 5. JAVASCRIPT --- #}
+<script>
+    function toggleDropdown(event) {
+        event.stopPropagation();
+        var btn = event.currentTarget;
+        var menu = btn.nextElementSibling;
+        var icon = btn.querySelector('.fa-chevron-down');
+
+        document.querySelectorAll('.ipb-menu-box').forEach(el => {
+            if (el !== menu) el.classList.remove('show');
+        });
+
+        menu.classList.toggle('show');
+        
+        if(icon) {
+            icon.style.transform = menu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    }
+
+    window.addEventListener('click', function(e) {
+        document.querySelectorAll('.ipb-menu-box.show').forEach(menu => {
+            if (!menu.parentElement.contains(e.target)) {
+                menu.classList.remove('show');
+                var icon = menu.parentElement.querySelector('.fa-chevron-down');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            }
+        });
+    });
+</script>
