@@ -1,11 +1,11 @@
 {% extends "page.html" %}
 
 {# --- Judul Halaman & Breadcrumb --- #}
-{% block subtitle %}Dataset Saya{% endblock %}
+{% block subtitle %}Organisasi Saya{% endblock %}
 
 {% block breadcrumb_content %}
   <li><a href="{{ h.url_for('dashboard.datasets') }}">Dashboard</a></li>
-  <li class="active"><a href="">Dataset Saya</a></li>
+  <li class="active"><a href="">Organisasi Saya</a></li>
 {% endblock %}
 
 {# --- CSS CUSTOM --- #}
@@ -13,9 +13,8 @@
   {{ super() }}
   <style>
     /* --- 1. Global Layout Fix --- */
-    /* Menimpa style primary CKAN agar full width */
     .wrapper {
-        background-color: #F5F5F5; /* Background abu-abu muda halaman */
+        background-color: #F5F5F5;
     }
     
     /* Area Utama Kanan */
@@ -23,16 +22,15 @@
         font-family: 'Inter', "Helvetica Neue", Arial, sans-serif;
         color: #333;
         background: #fff;
-        padding: 30px; /* Padding dalam yang lega */
+        padding: 30px;
         min-height: 600px;
         width: 100%;
         box-sizing: border-box;
-        border-radius: 4px; /* Sedikit rounded di pojok container utama */
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Shadow halus agar terlihat timbul */
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     /* --- 2. Sidebar Styling (Kiri) --- */
-    /* Hapus default padding module CKAN */
     .module-narrow.module-shallow {
         padding: 0;
         margin: 0;
@@ -63,15 +61,15 @@
         background: transparent;
     }
     
-    /* CSS untuk Ikon Sidebar */
+    /* Update Ikon Sidebar agar konsisten */
     .nav-sidebar-custom li a i {
         width: 24px;
-        font-size: 18px; /* Ukuran ikon sedikit lebih besar agar seragam */
-        margin-right: 12px; /* Jarak antara ikon dan teks */
+        font-size: 18px; /* Ukuran seragam */
+        margin-right: 12px;
         text-align: center;
     }
 
-    /* State Aktif (Biru Solid) */
+    /* State Aktif */
     .nav-sidebar-custom li.active a {
         background-color: #23378B !important;
         color: white !important;
@@ -103,7 +101,6 @@
         width: 100%;
     }
 
-    /* Dropdown Show Items */
     .items-per-page {
         display: flex;
         align-items: center;
@@ -120,10 +117,9 @@
         padding: 5px;
     }
 
-    /* Search & Button Group */
     .search-group {
         display: flex;
-        gap: 15px; /* Jarak antara search dan tombol tambah */
+        gap: 15px;
     }
 
     .custom-input-group {
@@ -136,7 +132,7 @@
         border-right: none;
         border-radius: 4px 0 0 4px;
         padding: 8px 15px;
-        height: 40px; /* Lebih tinggi agar gagah */
+        height: 40px;
         width: 300px;
         font-size: 14px;
         box-shadow: none;
@@ -164,7 +160,6 @@
         background-color: #1a2a6b;
     }
 
-    /* Tombol Tambah Dataset */
     .btn-add-custom {
         background-color: #23378B;
         color: white;
@@ -204,7 +199,7 @@
     }
 
     .table-custom thead tr {
-        background-color: #E6F0FF; /* Warna Header Biru Muda */
+        background-color: #E6F0FF;
     }
 
     .table-custom th {
@@ -228,7 +223,6 @@
         background-color: #fafafa;
     }
 
-    /* Typography Dataset Title */
     .dataset-title {
         font-weight: 600;
         color: #333;
@@ -241,15 +235,7 @@
         color: #23378B;
     }
 
-    /* Labels / Badges */
-    .format-label {
-        font-size: 10px;
-        text-transform: uppercase;
-        color: #666;
-        font-weight: 700;
-        margin-right: 5px;
-    }
-
+    /* Badge Roles */
     .badge-custom {
         padding: 6px 15px;
         border-radius: 50px;
@@ -259,8 +245,9 @@
         min-width: 90px;
         text-align: center;
     }
-    .badge-pub { background-color: #D4EDDA; color: #155724; }
-    .badge-draft { background-color: #FFF3CD; color: #856404; }
+    .badge-admin { background-color: #CCE5FF; color: #004085; }
+    .badge-editor { background-color: #D4EDDA; color: #155724; }
+    .badge-member { background-color: #E2E3E5; color: #383D41; }
 
     /* Action Buttons */
     .btn-icon-wrapper {
@@ -276,7 +263,6 @@
         border: none;
     }
     .btn-blue { background-color: #23378B; }
-    .btn-red { background-color: #C0392B; }
     .btn-icon:hover { opacity: 0.9; color: white; }
 
     /* Empty State */
@@ -296,23 +282,23 @@
 
 {# --- SIDEBAR KIRI (Secondary Content) --- #}
 {% block secondary_content %}
-  {# Wrapper untuk merapikan sidebar #}
   <div style="padding-right: 10px;">
     <ul class="nav-sidebar-custom">
-      <li class="active">
+      <li>
         <a href="{{ h.url_for('dashboard.datasets') }}">
-          {# Menambahkan ikon database untuk Dataset Saya #}
+          {# Ikon Database #}
           <i class="fa fa-database"></i> Dataset Saya
         </a>
       </li>
-      <li>
+      <li class="active">
         <a href="{{ h.url_for('dashboard.organizations') }}">
-          {# Menambahkan ikon bangunan untuk Organisasi Saya #}
+          {# Ikon Building #}
           <i class="fa fa-building"></i> Organisasi Saya
         </a>
       </li>
       <li>
         <a href="{{ h.url_for('dashboard.groups') }}">
+          {# Ikon Users #}
           <i class="fa fa-users"></i> Grup Saya
         </a>
       </li>
@@ -324,7 +310,7 @@
 {# --- KONTEN UTAMA (Primary Content) --- #}
 {% block primary_content %}
   <div class="dashboard-container">
-    <h1 class="page-heading-custom">DATASET SAYA</h1>
+    <h1 class="page-heading-custom">ORGANISASI SAYA</h1>
 
     {# --- Controls Bar --- #}
     <div class="controls-bar">
@@ -343,30 +329,32 @@
       {# Right: Search & Add #}
       <div class="search-group">
         <form action="" method="get" class="custom-input-group">
-          <input type="text" class="input-search-custom" name="q" value="{{ c.q }}" placeholder="Cari dataset disini...">
+          <input type="text" class="input-search-custom" name="q" value="{{ c.q }}" placeholder="Cari organisasi...">
           <button type="submit" class="btn-search-custom">
             <i class="fa fa-search"></i>
           </button>
         </form>
 
-        <a href="{{ h.url_for('dataset.new') }}" class="btn-add-custom">
-          Tambah Dataset
+        {# Cek permission create organization #}
+        {% if h.check_access('organization_create') %}
+        <a href="{{ h.url_for('organization.new') }}" class="btn-add-custom">
+          Tambah Organisasi
         </a>
+        {% endif %}
       </div>
 
     </div>
 
     {# --- Table Data --- #}
-    {% if packages %}
+    {% if organizations %}
     <div class="custom-table-wrapper">
       <table class="table table-custom">
         <thead>
           <tr>
             <th class="text-center" style="width: 60px;">No</th>
-            <th>Nama</th>
-            <th>Tipe file</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Update terakhir</th>
+            <th>Nama Organisasi</th>
+            <th>Jumlah Dataset</th>
+            <th class="text-center">Peran Saya</th>
             <th class="text-center" style="width: 120px;">Aksi</th>
           </tr>
         </thead>
@@ -374,51 +362,42 @@
           {% set current_page = request.args.get('page', 1) | int %}
           {% set limit = request.args.get('limit', 12) | int %}
           
-          {% for pkg in packages %}
+          {% for org in organizations %}
           <tr>
             {# No #}
             <td class="text-center">{{ loop.index + ((current_page - 1) * limit) }}</td>
             
-            {# Nama #}
+            {# Nama Organisasi #}
             <td>
-              <a href="{{ h.url_for('dataset.read', id=pkg.name) }}" class="dataset-title">
-                {{ pkg.title or pkg.name }}
+              <a href="{{ h.url_for('organization.read', id=org.name) }}" class="dataset-title">
+                {{ org.title or org.name }}
               </a>
+              <div style="font-size: 12px; color: #888; margin-top: 2px;">
+                {{ org.description | truncate(60) if org.description else 'Tidak ada deskripsi' }}
+              </div>
             </td>
 
-            {# Tipe File #}
+            {# Jumlah Dataset #}
             <td>
-               {% set formats = [] %}
-               {% for res in pkg.resources %}
-                  {% if res.format and res.format not in formats %}
-                      {% do formats.append(res.format) %}
-                      <span class="format-label">{{ res.format }}</span>
-                  {% endif %}
-               {% endfor %}
+               <span style="font-weight: bold; color: #555;">{{ org.package_count }}</span> Dataset
             </td>
 
-            {# Status #}
+            {# Peran (Role) #}
             <td class="text-center">
-              {% if pkg.private %}
-                <span class="badge-custom badge-draft">Draft</span>
+              {% if org.capacity == 'admin' %}
+                <span class="badge-custom badge-admin">Admin</span>
+              {% elif org.capacity == 'editor' %}
+                 <span class="badge-custom badge-editor">Editor</span>
               {% else %}
-                <span class="badge-custom badge-pub">Published</span>
+                <span class="badge-custom badge-member">Member</span>
               {% endif %}
-            </td>
-
-            {# Tanggal #}
-            <td class="text-center">
-               {{ h.render_datetime(pkg.metadata_modified, date_format='%d/%m/%Y') }}
             </td>
 
             {# Aksi #}
             <td>
               <div class="btn-icon-wrapper">
-                <a href="{{ h.url_for('dataset.edit', id=pkg.name) }}" class="btn-icon btn-blue" title="Edit">
+                <a href="{{ h.url_for('organization.edit', id=org.name) }}" class="btn-icon btn-blue" title="Edit Organisasi">
                   <i class="fa fa-pencil"></i>
-                </a>
-                <a href="{{ h.url_for('dataset.delete', id=pkg.name) }}" class="btn-icon btn-red" title="Hapus" data-module="confirm-action" data-module-content="Apakah Anda yakin ingin menghapus dataset ini?">
-                  <i class="fa fa-trash"></i>
                 </a>
               </div>
             </td>
@@ -430,8 +409,8 @@
 
     {% else %}
       <div class="empty-state">
-          <h3 style="margin-top:0; font-weight: bold; color: #555;">Belum ada dataset.</h3>
-          <p>Klik tombol "Tambah Dataset" di kanan atas untuk memulai.</p>
+          <h3 style="margin-top:0; font-weight: bold; color: #555;">Belum ada organisasi.</h3>
+          <p>Anda belum tergabung dalam organisasi manapun.</p>
       </div>
     {% endif %}
 
