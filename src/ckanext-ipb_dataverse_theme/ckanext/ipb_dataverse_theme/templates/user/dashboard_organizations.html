@@ -1,0 +1,154 @@
+{% extends "page.html" %}
+
+{# --- Judul Halaman & Breadcrumb --- #}
+{% block subtitle %}Organisasi Saya{% endblock %}
+
+{% block breadcrumb_content %}
+  <li><a href="{{ h.url_for('dashboard.datasets') }}">Dashboard</a></li>
+  <li class="active"><a href="">Organisasi Saya</a></li>
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  
+  {# Panggil file CSS eksternal yang baru dibuat #}
+  <link rel="stylesheet" href="/dashboard/dashboard_custom.css">
+  
+{% endblock %}
+
+{# --- SIDEBAR KIRI (Secondary Content) --- #}
+{% block secondary_content %}
+  <div style="padding-right: 10px;">
+    <ul class="nav-sidebar-custom">
+      <li>
+        <a href="{{ h.url_for('dashboard.datasets') }}">
+          {# Ikon Database #}
+          <i class="fa fa-database"></i> Dataset Saya
+        </a>
+      </li>
+      <li class="active">
+        <a href="{{ h.url_for('dashboard.organizations') }}">
+          {# Ikon Building #}
+          <i class="fa fa-building"></i> Organisasi Saya
+        </a>
+      </li>
+      <li>
+        <a href="{{ h.url_for('dashboard.groups') }}">
+          {# Ikon Users #}
+          <i class="fa fa-users"></i> Grup Saya
+        </a>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+
+{# --- KONTEN UTAMA (Primary Content) --- #}
+{% block primary_content %}
+  <div class="dashboard-container">
+    <h1 class="page-heading-custom">ORGANISASI SAYA</h1>
+
+    {# --- Controls Bar --- #}
+    <div class="controls-bar">
+      
+      {# Left: Show Items #}
+      <div class="items-per-page">
+        Show 
+        <select onchange="window.location.href='?limit='+this.value">
+          <option value="12" {% if request.args.get('limit') == '12' or not request.args.get('limit') %}selected{% endif %}>12</option>
+          <option value="25" {% if request.args.get('limit') == '25' %}selected{% endif %}>25</option>
+          <option value="50" {% if request.args.get('limit') == '50' %}selected{% endif %}>50</option>
+        </select> 
+        items
+      </div>
+
+      {# Right: Search & Add #}
+      <div class="search-group">
+        <form action="" method="get" class="custom-input-group">
+          <input type="text" class="input-search-custom" name="q" value="{{ c.q }}" placeholder="Cari organisasi...">
+          <button type="submit" class="btn-search-custom">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+
+        {# Cek permission create organization #}
+        {% if h.check_access('organization_create') %}
+        <a href="{{ h.url_for('organization.new') }}" class="btn-add-custom">
+          Tambah Organisasi
+        </a>
+        {% endif %}
+      </div>
+
+    </div>
+
+    {# --- Table Data --- #}
+    {% if organizations %}
+    <div class="custom-table-wrapper">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 60px;">No</th>
+            <th>Nama Organisasi</th>
+            <th>Jumlah Dataset</th>
+            <th class="text-center">Peran Saya</th>
+            <th class="text-center" style="width: 120px;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set current_page = request.args.get('page', 1) | int %}
+          {% set limit = request.args.get('limit', 12) | int %}
+          
+          {% for org in organizations %}
+          <tr>
+            {# No #}
+            <td class="text-center">{{ loop.index + ((current_page - 1) * limit) }}</td>
+            
+            {# Nama Organisasi #}
+            <td>
+              <a href="{{ h.url_for('organization.read', id=org.name) }}" class="dataset-title">
+                {{ org.title or org.name }}
+              </a>
+              <div style="font-size: 12px; color: #888; margin-top: 2px;">
+                {{ org.description | truncate(60) if org.description else 'Tidak ada deskripsi' }}
+              </div>
+            </td>
+
+            {# Jumlah Dataset #}
+            <td>
+               <span style="font-weight: bold; color: #555;">{{ org.package_count }}</span> Dataset
+            </td>
+
+            {# Peran (Role) #}
+            <td class="text-center">
+              {% if org.capacity == 'admin' %}
+                <span class="badge-custom badge-admin">Admin</span>
+              {% elif org.capacity == 'editor' %}
+                 <span class="badge-custom badge-editor">Editor</span>
+              {% else %}
+                <span class="badge-custom badge-member">Member</span>
+              {% endif %}
+            </td>
+
+            {# Aksi #}
+            <td>
+              <div class="btn-icon-wrapper">
+                <a href="{{ h.url_for('organization.edit', id=org.name) }}" class="btn-icon btn-blue" title="Edit Organisasi">
+                  <i class="fa fa-pencil"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% else %}
+      <div class="empty-state">
+          <h3 style="margin-top:0; font-weight: bold; color: #555;">Belum ada organisasi.</h3>
+          <p>Anda belum tergabung dalam organisasi manapun.</p>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}

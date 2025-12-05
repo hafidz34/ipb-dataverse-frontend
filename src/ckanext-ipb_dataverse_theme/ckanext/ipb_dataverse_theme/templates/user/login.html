@@ -1,11 +1,7 @@
-{# Halaman login IPB Dataverse #}
-
 {% ckan_extends %}
 
-{# Judul tab browser #}
 {% block page_title %}Login - IPB Dataverse{% endblock %}
 
-{# Konten utama halaman login #}
 {% block content %}
 <section class="ipb-login-section">
   <div class="container">
@@ -16,18 +12,21 @@
         Silahkan masuk menggunakan ID IPB dan kata sandi Anda
       </p>
 
-      <form class="ipb-login-form" method="post" action="">
+      {# Form Login Wajib mengarah ke user.login #}
+      <form class="ipb-login-form" method="post" action="{{ h.url_for('user.login') }}">
+        
         {{ h.csrf_input() }}
 
         <div class="ipb-form-group">
-          <label class="ipb-form-label" for="field-login">ID IPB</label>
+          <label class="ipb-form-label" for="field-login">ID IPB / Username</label>
           <input
             id="field-login"
             type="text"
             name="login"
             value="{{ c.login or '' }}"
             class="ipb-form-input"
-            placeholder="Masukkan email">
+            placeholder="Username atau Email"
+            autofocus>
         </div>
 
         <div class="ipb-form-group">
@@ -39,63 +38,42 @@
               name="password"
               class="ipb-form-input ipb-form-input-password"
               placeholder="Masukkan kata sandi">
-
-            {# Ikon untuk toggle show/hide password #}
-            <span class="ipb-password-icon">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </span>
+            <span class="ipb-password-icon"><i class="fa fa-eye"></i></span>
           </div>
-
+          
           <div class="ipb-login-help">
-            Lupa kata sandi?
-            <a href="#" class="ipb-login-link">klik disini</a>
+            Lupa kata sandi? <a href="{{ h.url_for('user.request_reset') }}" class="ipb-login-link">klik disini</a>
           </div>
         </div>
 
-        <button type="submit" class="ipb-login-button">
-          Login
-        </button>
+        {# Redirect Handler #}
+        {% if c.came_from %}
+          <input type="hidden" name="came_from" value="{{ c.came_from }}" />
+        {% endif %}
+
+        <button type="submit" class="ipb-login-button">Login</button>
       </form>
 
       <p class="ipb-login-register">
-        Belum memiliki akun?
-        <a href="#" class="ipb-login-link">
-          Registrasi di sini
-        </a>
+        Belum memiliki akun? <a href="{{ h.url_for('user.register') }}" class="ipb-login-link">Registrasi di sini</a>
       </p>
     </div>
   </div>
 </section>
+
+{# Script Show/Hide Password #}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var passInput = document.querySelector('.ipb-form-input-password');
+    var toggleIcon = document.querySelector('.ipb-password-icon');
+    if(passInput && toggleIcon){
+      toggleIcon.addEventListener('click', function(){
+        var type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passInput.setAttribute('type', type);
+      });
+    }
+  });
+</script>
 {% endblock %}
 
-{# Mengosongkan footer pada halaman login #}
 {% block footer %}{% endblock %}
-
-{# Script untuk toggle show/hide password #}
-{% block scripts %}
-  {{ super() }}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var passwordInput = document.getElementById('field-password');
-      var toggle = document.querySelector('.ipb-password-icon');
-
-      if (passwordInput && toggle) {
-        toggle.addEventListener('click', function () {
-          var isPassword = passwordInput.getAttribute('type') === 'password';
-          passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-
-          var icon = toggle.querySelector('i');
-          if (icon) {
-            if (isPassword) {
-              icon.classList.remove('fa-eye');
-              icon.classList.add('fa-eye-slash');
-            } else {
-              icon.classList.remove('fa-eye-slash');
-              icon.classList.add('fa-eye');
-            }
-          }
-        });
-      }
-    });
-  </script>
-{% endblock %}

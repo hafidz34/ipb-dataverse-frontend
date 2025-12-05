@@ -1,0 +1,162 @@
+{% extends "page.html" %}
+
+{# --- Judul Halaman & Breadcrumb --- #}
+{% block subtitle %}Dataset Saya{% endblock %}
+
+{% block breadcrumb_content %}
+  <li><a href="{{ h.url_for('dashboard.datasets') }}">Dashboard</a></li>
+  <li class="active"><a href="">Dataset Saya</a></li>
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  
+  {# Panggil file CSS eksternal yang baru dibuat #}
+  <link rel="stylesheet" href="/dashboard/dashboard_custom.css">
+  
+{% endblock %}
+
+
+{# --- SIDEBAR KIRI (Secondary Content) --- #}
+{% block secondary_content %}
+  {# Wrapper untuk merapikan sidebar #}
+  <div style="padding-right: 10px;">
+    <ul class="nav-sidebar-custom">
+      <li class="active">
+        <a href="{{ h.url_for('dashboard.datasets') }}">
+          {# Menambahkan ikon database untuk Dataset Saya #}
+          <i class="fa fa-database"></i> Dataset Saya
+        </a>
+      </li>
+      <li>
+        <a href="{{ h.url_for('dashboard.organizations') }}">
+          {# Menambahkan ikon bangunan untuk Organisasi Saya #}
+          <i class="fa fa-building"></i> Organisasi Saya
+        </a>
+      </li>
+      <li>
+        <a href="{{ h.url_for('dashboard.groups') }}">
+          <i class="fa fa-users"></i> Grup Saya
+        </a>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+
+
+{# --- KONTEN UTAMA (Primary Content) --- #}
+{% block primary_content %}
+  <div class="dashboard-container">
+    <h1 class="page-heading-custom">DATASET SAYA</h1>
+
+    {# --- Controls Bar --- #}
+    <div class="controls-bar">
+      
+      {# Left: Show Items #}
+      <div class="items-per-page">
+        Show 
+        <select onchange="window.location.href='?limit='+this.value">
+          <option value="12" {% if request.args.get('limit') == '12' or not request.args.get('limit') %}selected{% endif %}>12</option>
+          <option value="25" {% if request.args.get('limit') == '25' %}selected{% endif %}>25</option>
+          <option value="50" {% if request.args.get('limit') == '50' %}selected{% endif %}>50</option>
+        </select> 
+        items
+      </div>
+
+      {# Right: Search & Add #}
+      <div class="search-group">
+        <form action="" method="get" class="custom-input-group">
+          <input type="text" class="input-search-custom" name="q" value="{{ c.q }}" placeholder="Cari dataset disini...">
+          <button type="submit" class="btn-search-custom">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+
+        <a href="{{ h.url_for('dataset.new') }}" class="btn-add-custom">
+          Tambah Dataset
+        </a>
+      </div>
+
+    </div>
+
+    {# --- Table Data --- #}
+    {% if packages %}
+    <div class="custom-table-wrapper">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 60px;">No</th>
+            <th>Nama</th>
+            <th>Tipe file</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Update terakhir</th>
+            <th class="text-center" style="width: 120px;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set current_page = request.args.get('page', 1) | int %}
+          {% set limit = request.args.get('limit', 12) | int %}
+          
+          {% for pkg in packages %}
+          <tr>
+            {# No #}
+            <td class="text-center">{{ loop.index + ((current_page - 1) * limit) }}</td>
+            
+            {# Nama #}
+            <td>
+              <a href="{{ h.url_for('dataset.read', id=pkg.name) }}" class="dataset-title">
+                {{ pkg.title or pkg.name }}
+              </a>
+            </td>
+
+            {# Tipe File #}
+            <td>
+               {% set formats = [] %}
+               {% for res in pkg.resources %}
+                  {% if res.format and res.format not in formats %}
+                      {% do formats.append(res.format) %}
+                      <span class="format-label">{{ res.format }}</span>
+                  {% endif %}
+               {% endfor %}
+            </td>
+
+            {# Status #}
+            <td class="text-center">
+              {% if pkg.private %}
+                <span class="badge-custom badge-draft">Draft</span>
+              {% else %}
+                <span class="badge-custom badge-pub">Published</span>
+              {% endif %}
+            </td>
+
+            {# Tanggal #}
+            <td class="text-center">
+               {{ h.render_datetime(pkg.metadata_modified, date_format='%d/%m/%Y') }}
+            </td>
+
+            {# Aksi #}
+            <td>
+              <div class="btn-icon-wrapper">
+                <a href="{{ h.url_for('dataset.edit', id=pkg.name) }}" class="btn-icon btn-blue" title="Edit">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a href="{{ h.url_for('dataset.delete', id=pkg.name) }}" class="btn-icon btn-red" title="Hapus" data-module="confirm-action" data-module-content="Apakah Anda yakin ingin menghapus dataset ini?">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% else %}
+      <div class="empty-state">
+          <h3 style="margin-top:0; font-weight: bold; color: #555;">Belum ada dataset.</h3>
+          <p>Klik tombol "Tambah Dataset" di kanan atas untuk memulai.</p>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
